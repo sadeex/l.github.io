@@ -2,211 +2,1536 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fire Store Database</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fire Store Database 🔥</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-blue: #0a0f2c;
+      --navy: #0d1b4b;
+      --blue: #1a2f7a;
+      --accent: #2563eb;
+      --fire: #f97316;
+      --fire2: #ef4444;
+      --white: #f8fafc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: var(--dark-blue);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, .section-title, .fire-text, nav .font-bold { font-family: 'Poppins', 'Segoe UI', sans-serif; }
+    .fire-gradient { background: linear-gradient(135deg, #0a0f2c 0%, #0d1b4b 50%, #1a2f7a 100%); }
+    .fire-btn {
+      background: linear-gradient(135deg, #f97316, #ef4444);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .fire-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,115,22,0.5); }
+    .blue-btn {
+      background: linear-gradient(135deg, #1a2f7a, #2563eb);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .blue-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,0.5); }
+    .card {
+      background: linear-gradient(145deg, #0d1b4b, #1a2f7a22);
+      border: 1px solid #2563eb44;
+      border-radius: 16px;
+      transition: all 0.3s;
+    }
+    .card:hover { border-color: #f97316aa; transform: translateY(-4px); box-shadow: 0 12px 40px rgba(249,115,22,0.15); }
+    .modal-bg {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-box {
+      background: linear-gradient(145deg, #0d1b4b, #0a0f2c);
+      border: 1px solid #2563eb66;
+      border-radius: 20px;
+      padding: 32px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-box-wide {
+      max-width: 700px;
+    }
+    input, textarea, select {
+      background: #0a0f2c;
+      border: 1px solid #2563eb55;
+      color: #f8fafc;
+      border-radius: 10px;
+      padding: 10px 14px;
+      width: 100%;
+      font-size: 14px;
+      transition: border 0.3s;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #f97316;
+    }
+    textarea { resize: vertical; min-height: 80px; }
+    .tag {
+      display: inline-block;
+      background: #1a2f7a;
+      border: 1px solid #2563eb55;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tag:hover, .tag.active { background: linear-gradient(135deg, #f97316, #ef4444); border-color: transparent; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; background: #1a2f7a55; border-radius: 999px; padding: 2px 10px; font-size: 11px; }
+    .fire-text { background: linear-gradient(135deg, #f97316, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .glow { text-shadow: 0 0 30px rgba(249,115,22,0.6); }
+    nav { background: linear-gradient(90deg, #0a0f2c, #0d1b4b); border-bottom: 1px solid #2563eb33; position: sticky; top: 0; z-index: 100; }
+    .hero-section {
+      background: linear-gradient(160deg, #0a0f2c 0%, #0d1b4b 40%, #1a2f7a 100%);
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.pexels.com/photos/30959071/pexels-photo-30959071.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.12;
+    }
+    .hero-content { position: relative; z-index: 1; text-align: center; padding: 40px 20px; }
+    .product-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px 12px 0 0;
+      background: #0d1b4b;
+    }
+    .product-img-placeholder {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #0d1b4b, #1a2f7a);
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+    }
+    .view-count { color: #94a3b8; font-size: 12px; display: flex; align-items: center; gap: 4px; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0f2c; }
+    ::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 3px; }
+    .notification {
+      position: fixed; top: 80px; right: 20px; z-index: 9999;
+      background: linear-gradient(135deg, #0d1b4b, #1a2f7a);
+      border: 1px solid #f97316;
+      border-radius: 12px;
+      padding: 14px 20px;
+      color: white;
+      font-size: 14px;
+      animation: slideIn 0.4s ease;
+      max-width: 300px;
+    }
+    @keyframes slideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    .user-product-card { background: linear-gradient(145deg, #0d1b4b, #0a0f2c); border: 1px solid #2563eb44; border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+    .section-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; }
+    .price-tag { color: #f97316; font-size: 1.2rem; font-weight: 700; }
+    .admin-panel-section { background: #0d1b4b55; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid #2563eb33; }
+    .flame-icon { animation: flicker 1.5s ease-in-out infinite alternate; display: inline-block; }
+    @keyframes flicker { 0% { transform: scaleY(1) rotate(-2deg); } 100% { transform: scaleY(1.1) rotate(2deg); } }
+    .tab-btn { padding: 10px 20px; border-radius: 10px; cursor: pointer; transition: all 0.3s; background: #0d1b4b; border: 1px solid #2563eb33; color: #94a3b8; }
+    .tab-btn.active { background: linear-gradient(135deg, #f97316, #ef4444); color: white; border-color: transparent; }
+    .hidden { display: none !important; }
+    .grid-products { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    @media(max-width: 600px) { .grid-products { grid-template-columns: 1fr 1fr; gap: 12px; } }
+    @media(max-width: 400px) { .grid-products { grid-template-columns: 1fr; } }
+
+    /* ============ PROFESSIONAL UPGRADES ============ */
+
+    /* Animated aurora backdrop on hero */
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(249,115,22,0.18), transparent 45%),
+        radial-gradient(circle at 80% 20%, rgba(37,99,235,0.25), transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(239,68,68,0.16), transparent 45%);
+      animation: auroraMove 14s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+    @keyframes auroraMove {
+      0% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(-3%, 2%) scale(1.08); }
+      100% { transform: translate(3%, -2%) scale(1.04); }
+    }
+    .hero-particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .particle {
+      position: absolute;
+      bottom: -10%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.85), rgba(249,115,22,0));
+      animation: floatUp linear infinite;
+      opacity: 0.7;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 0.8; }
+      100% { transform: translateY(-120vh) translateX(20px); opacity: 0; }
+    }
+
+    /* Fade/slide-in on scroll */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1.visible { transition-delay: 0.08s; }
+    .reveal-delay-2.visible { transition-delay: 0.16s; }
+    .reveal-delay-3.visible { transition-delay: 0.24s; }
+    .reveal-delay-4.visible { transition-delay: 0.32s; }
+
+    /* Animated counters get a subtle pop */
+    .stat-pop { animation: statPop 0.6s ease both; }
+    @keyframes statPop { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* Hero badge pill */
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, rgba(249,115,22,0.15), rgba(37,99,235,0.15));
+      border: 1px solid rgba(249,115,22,0.4);
+      padding: 6px 18px; border-radius: 999px; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.3px; margin-bottom: 18px; backdrop-filter: blur(4px);
+      animation: pulseBadge 2.4s ease-in-out infinite;
+    }
+    @keyframes pulseBadge {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(249,115,22,0.35); }
+      50% { box-shadow: 0 0 0 8px rgba(249,115,22,0); }
+    }
+
+    /* Buttons get a shine sweep */
+    .fire-btn, .blue-btn {
+      position: relative;
+      overflow: hidden;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    .fire-btn::after, .blue-btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+    .fire-btn:hover::after, .blue-btn:hover::after { left: 125%; }
+
+    /* Nav polish */
+    nav { backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.25); }
+    .tab-btn { font-weight: 500; }
+    .tab-btn:hover:not(.active) { border-color: #f9731677; color: #f8fafc; transform: translateY(-1px); }
+
+    /* Card image zoom on hover */
+    .card { overflow: hidden; }
+    .card .product-img, .card .product-img-placeholder { transition: transform 0.5s ease; }
+    .card:hover .product-img, .card:hover .product-img-placeholder { transform: scale(1.06); }
+
+    /* Skeleton shimmer for stats while loading */
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+    /* Unique-URL share chip */
+    .url-chip {
+      display: flex; align-items: center; gap: 8px;
+      background: #0a0f2c; border: 1px solid #2563eb55; border-radius: 10px;
+      padding: 8px 12px; font-size: 12px; color: #93c5fd; word-break: break-all;
+    }
+    .url-chip button { white-space: nowrap; }
+
+    /* Description rendering modes */
+    .desc-rendered { line-height: 1.7; color: #cbd5e1; }
+    .desc-rendered img { max-width: 100%; border-radius: 10px; margin: 10px 0; }
+    .desc-rendered a { color: #f97316; }
+    .desc-plain { white-space: pre-wrap; line-height: 1.7; color: #cbd5e1; }
+
+    /* Full view toggle pill */
+    .toggle-row { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+    .switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch-slider {
+      position: absolute; cursor: pointer; inset: 0;
+      background: #1a2f7a; border-radius: 999px; transition: 0.3s;
+      border: 1px solid #2563eb55;
+    }
+    .switch-slider::before {
+      content: ''; position: absolute; height: 18px; width: 18px; left: 2px; top: 2px;
+      background: white; border-radius: 50%; transition: 0.3s;
+    }
+    .switch input:checked + .switch-slider { background: linear-gradient(135deg, #f97316, #ef4444); border-color: transparent; }
+    .switch input:checked + .switch-slider::before { transform: translateX(20px); }
+
+    /* Full-view product modal (renders raw HTML, full website style) */
+    .fullview-modal-bg {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000;
+      display: flex; align-items: center; justify-content: center; padding: 16px;
+    }
+    .fullview-box {
+      background: #fff; color: #111; width: 100%; max-width: 1000px; height: 90vh;
+      border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      animation: fvIn 0.3s ease;
+    }
+    @keyframes fvIn { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .fullview-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 18px; background: #0a0f2c; color: white; flex-shrink: 0;
+    }
+    .fullview-iframe { flex: 1; width: 100%; border: none; background: white; }
+
+    /* Empty / loading states */
+    .skeleton-card { border-radius: 16px; overflow: hidden; background: #0d1b4b; }
+    .skeleton-block { background: linear-gradient(90deg, #0d1b4b 25%, #15225f 37%, #0d1b4b 63%); background-size: 400% 100%; animation: shimmer 1.4s ease infinite; }
+
+    /* Footer polish */
+    footer { position: relative; }
+    .back-to-top {
+      position: fixed; bottom: 24px; right: 24px; z-index: 500;
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; cursor: pointer; opacity: 0; pointer-events: none;
+      transform: translateY(10px); transition: all 0.3s ease;
+    }
+    .back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  </style>
 </head>
 <body>
-  <div class="app-bg"></div>
 
-  <header class="topbar">
-    <div class="brand" onclick="goHome()" role="button" tabindex="0">
-      <div class="brand-logo">F</div>
+<!-- NOTIFICATION -->
+<div id="notif" class="notification hidden"></div>
+
+<!-- NAV -->
+<nav class="px-4 py-3 flex items-center justify-between">
+  <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
+    <span class="text-3xl flame-icon">🔥</span>
+    <div>
+      <div class="font-bold text-lg text-white">Fire Store Database</div>
+      <div class="text-xs text-blue-300">Your Fire Storage</div>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <button onclick="showPage('home')" class="tab-btn text-sm" id="navHome">Home</button>
+    <button onclick="showPage('products')" class="tab-btn text-sm" id="navProducts">Products</button>
+    <div id="navUserBtn" class="hidden">
+      <button onclick="showPage('userPanel')" class="tab-btn text-sm" id="navUser">My Store</button>
+    </div>
+    <div id="navAdminBtn" class="hidden">
+      <button onclick="showPage('adminPanel')" class="tab-btn text-sm" id="navAdmin">Admin</button>
+    </div>
+    <button onclick="handleAuthBtn()" id="authBtn" class="fire-btn px-4 py-2 rounded-xl text-sm font-semibold">Login</button>
+  </div>
+</nav>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div id="pagHome">
+  <section class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><span>🔥</span> Sri Lanka's Trusted Online Marketplace</div>
+      <div class="text-6xl mb-4 flame-icon">🔥</div>
+      <h1 class="text-5xl font-black mb-4 text-white glow">Fire Store <span class="fire-text">Database</span></h1>
+      <p class="text-xl text-blue-200 mb-2">Sri Lanka's No.1 Online Fire Store</p>
+      <p class="text-blue-300 mb-8 max-w-lg mx-auto">Best products, best prices, best service. You can sell your products too!</p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <button onclick="showPage('products')" class="fire-btn px-8 py-3 rounded-xl text-lg font-bold">🛒 Browse Products</button>
+        <button onclick="openUserRegModal()" class="blue-btn px-8 py-3 rounded-xl text-lg font-bold">🏪 Create Your Fire Store</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="py-12 px-6" style="background: #0d1b4b22;">
+    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="text-center reveal">
+        <div class="text-4xl font-black fire-text" id="statProducts">0</div>
+        <div class="text-blue-300 text-sm mt-1">Products</div>
+      </div>
+      <div class="text-center reveal reveal-delay-1">
+        <div class="text-4xl font-black fire-text" id="statSellers">0</div>
+        <div class="text-blue-300 text-sm mt-1">Sellers</div>
+      </div>
+      <div class="text-center reveal reveal-delay-2">
+        <div class="text-4xl font-black fire-text" id="statCats">0</div>
+        <div class="text-blue-300 text-sm mt-1">Categories</div>
+      </div>
+      <div class="text-center reveal reveal-delay-3">
+        <div class="text-4xl font-black fire-text" id="statViews">0</div>
+        <div class="text-blue-300 text-sm mt-1">Total Views</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Products -->
+  <div class="py-12 px-6 max-w-6xl mx-auto">
+    <h2 class="section-title fire-text reveal">🔥 Featured Products</h2>
+    <div class="grid-products" id="featuredGrid"></div>
+    <div class="text-center mt-8 reveal">
+      <button onclick="showPage('products')" class="fire-btn px-8 py-3 rounded-xl font-semibold">View All Products →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Back to top -->
+<div class="back-to-top fire-btn" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆️</div>
+
+<!-- ===================== PRODUCTS PAGE ===================== -->
+<div id="pagProducts" class="hidden py-8 px-6 max-w-7xl mx-auto">
+  <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+    <h2 class="section-title fire-text mb-0">🛒 All Products</h2>
+    <input type="text" placeholder="🔍 Search products..." style="max-width:300px;" id="searchInput" oninput="renderProducts()">
+  </div>
+  <!-- Categories Filter -->
+  <div class="flex flex-wrap gap-2 mb-8" id="catFilter">
+    <span class="tag active" onclick="filterCat('all', this)">All</span>
+  </div>
+  <div class="grid-products" id="productsGrid"></div>
+  <div id="noProducts" class="text-center py-20 text-blue-300 hidden">
+    <div class="text-5xl mb-4">🔍</div>
+    <p>No products found.</p>
+  </div>
+</div>
+
+<!-- ===================== USER PANEL ===================== -->
+<div id="pagUserPanel" class="hidden py-8 px-6 max-w-4xl mx-auto">
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="section-title fire-text mb-0">🏪 My Fire Store</h2>
+    <button onclick="openAddProductModal()" class="fire-btn px-5 py-2 rounded-xl font-semibold text-sm">+ Add Product</button>
+  </div>
+  <div id="userWelcome" class="mb-6 p-4 rounded-xl" style="background:#1a2f7a22; border:1px solid #2563eb33;"></div>
+  <div id="userProductsList"></div>
+</div>
+
+<!-- ===================== ADMIN PANEL ===================== -->
+<div id="pagAdminPanel" class="hidden py-8 px-6 max-w-5xl mx-auto">
+  <h2 class="section-title fire-text">⚙️ Admin Panel</h2>
+  
+  <!-- Tabs -->
+  <div class="flex flex-wrap gap-3 mb-8">
+    <button class="tab-btn active" onclick="adminTab('categories', this)">📁 Categories</button>
+    <button class="tab-btn" onclick="adminTab('allProducts', this)">📦 All Products</button>
+    <button class="tab-btn" onclick="adminTab('users', this)">👥 Users</button>
+  </div>
+
+  <!-- Categories Tab -->
+  <div id="tabCategories">
+    <div class="admin-panel-section">
+      <h3 class="font-bold text-lg mb-4 text-white">Add New Category</h3>
+      <div class="flex gap-3">
+        <input type="text" id="newCatInput" placeholder="Category name..." style="flex:1;">
+        <input type="text" id="newCatIcon" placeholder="Emoji icon..." style="max-width:120px;">
+        <button onclick="addCategory()" class="fire-btn px-5 py-2 rounded-xl font-semibold text-sm whitespace-nowrap">Add</button>
+      </div>
+    </div>
+    <div class="admin-panel-section">
+      <h3 class="font-bold text-lg mb-4 text-white">Manage Categories</h3>
+      <div id="catList"></div>
+    </div>
+  </div>
+
+  <!-- All Products Tab -->
+  <div id="tabAllProducts" class="hidden">
+    <div id="adminProductsList"></div>
+  </div>
+
+  <!-- Users Tab -->
+  <div id="tabUsers" class="hidden">
+    <div id="adminUsersList"></div>
+  </div>
+</div>
+
+<!-- ============== PRODUCT DETAIL MODAL ============== -->
+<div id="modalProductDetail" class="modal-bg hidden">
+  <div class="modal-box modal-box-wide">
+    <div id="productDetailContent"></div>
+    <button onclick="closeProductDetail()" class="mt-4 blue-btn w-full py-3 rounded-xl font-semibold">Close</button>
+  </div>
+</div>
+
+<!-- ============== FULL VIEW MODAL (renders HTML description full-page) ============== -->
+<div id="modalFullView" class="fullview-modal-bg hidden">
+  <div class="fullview-box">
+    <div class="fullview-header">
+      <div class="flex items-center gap-2 font-semibold"><span>🖥️</span><span id="fullViewTitle">Full View</span></div>
+      <div class="flex items-center gap-2">
+        <button onclick="openFullViewInNewTab()" class="blue-btn px-3 py-1 rounded-lg text-xs">↗ Open in New Tab</button>
+        <button onclick="closeFullView()" class="fire-btn px-3 py-1 rounded-lg text-xs">✕ Close</button>
+      </div>
+    </div>
+    <iframe id="fullViewIframe" class="fullview-iframe" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+  </div>
+</div>
+
+<!-- ============== USER LOGIN MODAL ============== -->
+<div id="modalLogin" class="modal-bg hidden">
+  <div class="modal-box">
+    <div class="text-center mb-6">
+      <div class="text-4xl mb-2">🔥</div>
+      <h2 class="text-2xl font-bold text-white">Login to Fire Store</h2>
+    </div>
+    <div class="space-y-4">
       <div>
-        <h1>Fire Store</h1>
-        <p>HTML • CSS • JavaScript Database</p>
+        <label class="text-blue-300 text-sm mb-1 block">Email</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com">
+      </div>
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">Password</label>
+        <input type="password" id="loginPassword" placeholder="Password">
+      </div>
+      <button onclick="doLogin()" class="fire-btn w-full py-3 rounded-xl font-bold text-lg">🔥 Login</button>
+      <div class="text-center text-blue-300 text-sm">
+        Don't have an account? <span class="text-orange-400 cursor-pointer hover:underline" onclick="closeModal('modalLogin'); openUserRegModal()">Register</span>
       </div>
     </div>
+    <button onclick="closeModal('modalLogin')" class="mt-4 blue-btn w-full py-2 rounded-xl text-sm">Cancel</button>
+  </div>
+</div>
 
-    <nav class="nav-actions">
-      <button class="ghost-btn" onclick="goHome()">Home</button>
-      <button class="ghost-btn" onclick="showCreateStore()">Create Your Fire Store</button>
-      <button class="primary-btn small" onclick="showAdminLogin()" id="adminNavBtn">Admin Login</button>
-      <button class="danger-btn small hidden" onclick="logoutAdmin()" id="adminLogoutBtn">Logout Admin</button>
-    </nav>
-  </header>
-
-  <main>
-    <section id="homePage" class="page active">
-      <div class="hero glass-card">
-        <div class="hero-content">
-          <span class="pill">Dark Blue + White Theme</span>
-          <h2>Build your mini online product database with <span>Fire Store</span></h2>
-          <p>
-            Create your own store, add products, custom categories, prices and descriptions.
-            Every product keeps its own view count.
-          </p>
-          <div class="hero-actions">
-            <button class="primary-btn big" onclick="showCreateStore()">Create Your Fire Store</button>
-            <button class="white-btn big" onclick="scrollToProducts()">View Products</button>
-          </div>
-        </div>
-        <div class="hero-panel">
-          <div class="metric-card">
-            <strong id="metricProducts">0</strong>
-            <span>Total Products</span>
-          </div>
-          <div class="metric-card">
-            <strong id="metricStores">0</strong>
-            <span>User Stores</span>
-          </div>
-          <div class="metric-card">
-            <strong id="metricViews">0</strong>
-            <span>Total Views</span>
-          </div>
-        </div>
+<!-- ============== USER REGISTER MODAL ============== -->
+<div id="modalUserReg" class="modal-bg hidden">
+  <div class="modal-box">
+    <div class="text-center mb-6">
+      <div class="text-4xl mb-2">🏪</div>
+      <h2 class="text-2xl font-bold text-white">Create Your Fire Store</h2>
+      <p class="text-blue-300 text-sm mt-1">Create your store and sell products!</p>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">Your Name</label>
+        <input type="text" id="regName" placeholder="Your name">
       </div>
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">Store Name</label>
+        <input type="text" id="regStoreName" placeholder="Your store name">
+      </div>
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">Email</label>
+        <input type="email" id="regEmail" placeholder="your@email.com">
+      </div>
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">Password</label>
+        <input type="password" id="regPassword" placeholder="Strong password">
+      </div>
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">WhatsApp Number</label>
+        <input type="text" id="regPhone" placeholder="07X XXXXXXX">
+      </div>
+      <button onclick="doRegister()" class="fire-btn w-full py-3 rounded-xl font-bold text-lg">🔥 Create Store</button>
+      <div class="text-center text-blue-300 text-sm">
+        Already have an account? <span class="text-orange-400 cursor-pointer hover:underline" onclick="closeModal('modalUserReg'); openModal('modalLogin')">Login</span>
+      </div>
+    </div>
+    <button onclick="closeModal('modalUserReg')" class="mt-4 blue-btn w-full py-2 rounded-xl text-sm">Cancel</button>
+  </div>
+</div>
 
-      <section class="toolbar glass-card" id="productsTop">
+<!-- ============== ADD / EDIT PRODUCT MODAL ============== -->
+<div id="modalAddProduct" class="modal-bg hidden">
+  <div class="modal-box modal-box-wide">
+    <div class="text-center mb-6">
+      <div class="text-4xl mb-2">📦</div>
+      <h2 class="text-2xl font-bold text-white" id="addProductTitle">Add Product</h2>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">Product Name *</label>
+        <input type="text" id="prodName" placeholder="Product name">
+      </div>
+      <div class="grid grid-cols-2 gap-4">
         <div>
-          <h3>All Fire Store Products</h3>
-          <p>Click any product to increase and see its view count.</p>
+          <label class="text-blue-300 text-sm mb-1 block">Price (LKR) *</label>
+          <input type="number" id="prodPrice" placeholder="0.00">
         </div>
-        <div class="filters">
-          <input id="searchInput" type="search" placeholder="Search product, category, store..." oninput="renderProducts()" />
-          <select id="categoryFilter" onchange="renderProducts()">
-            <option value="all">All Categories</option>
-          </select>
-        </div>
-      </section>
-
-      <section id="productGrid" class="product-grid"></section>
-      <div id="emptyState" class="empty-state hidden">
-        <h3>No products found</h3>
-        <p>Create your first Fire Store or change your search filter.</p>
-        <button class="primary-btn" onclick="showCreateStore()">Create Your Fire Store</button>
-      </div>
-    </section>
-
-    <section id="createStorePage" class="page">
-      <div class="form-shell glass-card narrow">
-        <button class="back-btn" onclick="goHome()">← Back Home</button>
-        <h2>Create Your Fire Store</h2>
-        <p class="muted">Create a user store and start adding your products.</p>
-
-        <form id="storeForm" class="stack-form">
-          <label>
-            Store Name
-            <input id="storeName" type="text" placeholder="Example: Saditha Electronics" required />
-          </label>
-          <label>
-            Owner Name
-            <input id="ownerName" type="text" placeholder="Your name" required />
-          </label>
-          <label>
-            Contact / Email
-            <input id="contactInfo" type="text" placeholder="Phone number or email" required />
-          </label>
-          <button class="primary-btn big" type="submit">Create Store</button>
-        </form>
-      </div>
-    </section>
-
-    <section id="userDashboard" class="page">
-      <div class="dashboard-head glass-card">
         <div>
-          <button class="back-btn" onclick="goHome()">← Back Home</button>
-          <h2 id="dashboardTitle">My Fire Store</h2>
-          <p id="dashboardSub" class="muted"></p>
+          <label class="text-blue-300 text-sm mb-1 block">Category *</label>
+          <select id="prodCategory"></select>
         </div>
-        <button class="primary-btn" onclick="openProductForm('user')">+ Add Product</button>
       </div>
-      <section id="userProductGrid" class="product-grid"></section>
-      <div id="userEmpty" class="empty-state hidden">
-        <h3>No products yet</h3>
-        <p>Add your first product to your Fire Store.</p>
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-blue-300 text-sm block">Description *</label>
+          <div class="toggle-row">
+            <span class="text-xs text-blue-300">HTML content</span>
+            <label class="switch">
+              <input type="checkbox" id="prodDescIsHtml" onchange="toggleDescHint()">
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+        </div>
+        <textarea id="prodDesc" placeholder="Product description... (plain text or full HTML/CSS code)" style="min-height:140px;"></textarea>
+        <p class="text-xs text-blue-400 mt-1" id="descHint">Plain text mode — write a normal description.</p>
       </div>
-    </section>
-
-    <section id="adminLoginPage" class="page">
-      <div class="form-shell glass-card narrow">
-        <button class="back-btn" onclick="goHome()">← Back Home</button>
-        <h2>Admin Login</h2>
-        <p class="muted">Only admin can edit every user's product posts.</p>
-        <form id="adminLoginForm" class="stack-form">
-          <label>
-            Admin Username
-            <input id="adminUsername" type="email" placeholder="admin@email.com" required />
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">Image URL (optional)</label>
+        <input type="text" id="prodImage" placeholder="https://example.com/image.jpg">
+        <p class="text-xs text-blue-400 mt-1">Paste any direct image link — it will be shown on the product card and detail page.</p>
+      </div>
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">WhatsApp / Contact</label>
+        <input type="text" id="prodContact" placeholder="07X XXXXXXX">
+      </div>
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">Product Emoji Icon</label>
+        <input type="text" id="prodEmoji" placeholder="e.g. 🔥 📱 👕" style="max-width:150px;">
+      </div>
+      <div class="admin-panel-section" style="margin-bottom:0;">
+        <div class="flex items-center justify-between gap-3">
+          <div>
+            <div class="font-semibold text-white text-sm">🖥️ Allow "Full View"</div>
+            <div class="text-xs text-blue-400 mt-1">If your description is full HTML code, turn this on so buyers can open it as a complete full-page preview.</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="prodAllowFullView">
+            <span class="switch-slider"></span>
           </label>
-          <label>
-            Passcode
-            <input id="adminPasscode" type="password" placeholder="Enter passcode" required />
-          </label>
-          <button class="primary-btn big" type="submit">Login as Admin</button>
-        </form>
+        </div>
       </div>
-    </section>
+      <div id="prodUrlChipWrap" class="hidden">
+        <label class="text-blue-300 text-sm mb-1 block">Unique Product URL</label>
+        <div class="url-chip">
+          <span id="prodUrlChip" style="flex:1;"></span>
+          <button type="button" onclick="copyProductUrl()" class="blue-btn px-3 py-1 rounded-lg text-xs">📋 Copy</button>
+        </div>
+      </div>
+      <button onclick="saveProduct()" class="fire-btn w-full py-3 rounded-xl font-bold text-lg" id="saveProductBtn">Save Product</button>
+    </div>
+    <button onclick="closeModal('modalAddProduct')" class="mt-4 blue-btn w-full py-2 rounded-xl text-sm">Cancel</button>
+  </div>
+</div>
 
-    <section id="adminDashboard" class="page">
-      <div class="dashboard-head glass-card">
+<!-- ============== ADMIN LOGIN MODAL ============== -->
+<div id="modalAdminLogin" class="modal-bg hidden">
+  <div class="modal-box">
+    <div class="text-center mb-6">
+      <div class="text-4xl mb-2">⚙️</div>
+      <h2 class="text-2xl font-bold text-white">Admin Login</h2>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">Admin Email</label>
+        <input type="email" id="adminEmail" placeholder="Admin email">
+      </div>
+      <div>
+        <label class="text-blue-300 text-sm mb-1 block">Passcode</label>
+        <input type="password" id="adminPass" placeholder="Admin passcode">
+      </div>
+      <button onclick="doAdminLogin()" class="fire-btn w-full py-3 rounded-xl font-bold">Login as Admin</button>
+    </div>
+    <button onclick="closeModal('modalAdminLogin')" class="mt-4 blue-btn w-full py-2 rounded-xl text-sm">Cancel</button>
+  </div>
+</div>
+
+<script>
+// ===== DATA STORE =====
+const ADMIN_EMAIL = 'sadithas59@gmail.com';
+const ADMIN_PASS  = 'Time?7@@';
+
+let db = {
+  users: [],
+  categories: [
+    { id: 'cat1', name: 'Electronics', icon: '📱' },
+    { id: 'cat2', name: 'Clothing', icon: '👕' },
+    { id: 'cat3', name: 'Food', icon: '🍕' },
+    { id: 'cat4', name: 'Beauty', icon: '💄' },
+    { id: 'cat5', name: 'Sports', icon: '⚽' },
+  ],
+  products: [],
+};
+
+let currentUser = null; // { email, name, storeName, phone, isAdmin }
+let editingProductId = null;
+let currentCatFilter = 'all';
+
+// ===== UNIQUE PRODUCT URL HELPERS =====
+function slugify(str) {
+  return (str || '')
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 60);
+}
+
+function getProductUrl(p) {
+  const base = window.location.origin + window.location.pathname;
+  return `${base}?product=${p.slug || p.id}`;
+}
+
+function ensureUniqueSlug(name, excludeId) {
+  let base = slugify(name) || 'product';
+  let slug = base;
+  let i = 2;
+  while (db.products.some(p => p.slug === slug && p.id !== excludeId)) {
+    slug = `${base}-${i}`;
+    i++;
+  }
+  return slug;
+}
+
+function findProductBySlugOrId(key) {
+  return db.products.find(p => p.slug === key) || db.products.find(p => p.id === key);
+}
+
+// Open the product directly if URL contains ?product=slug
+function checkDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('product');
+  if (key) {
+    const p = findProductBySlugOrId(key);
+    if (p) {
+      showPage('products');
+      setTimeout(() => viewProduct(p.id), 50);
+    }
+  }
+}
+
+// Load from localStorage
+function loadDB() {
+  const saved = localStorage.getItem('fireStoreDatabaseDB');
+  if (saved) {
+    try { db = JSON.parse(saved); } catch(e) {}
+  }
+  const savedUser = sessionStorage.getItem('fireStoreDatabaseUser');
+  if (savedUser) {
+    try { currentUser = JSON.parse(savedUser); } catch(e) {}
+  }
+}
+
+function saveDB() {
+  localStorage.setItem('fireStoreDatabaseDB', JSON.stringify(db));
+}
+
+// ===== NOTIFICATIONS =====
+function showNotif(msg, duration = 3000) {
+  const el = document.getElementById('notif');
+  el.textContent = msg;
+  el.classList.remove('hidden');
+  setTimeout(() => el.classList.add('hidden'), duration);
+}
+
+// ===== MODAL HELPERS =====
+function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+// ===== PAGE NAVIGATION =====
+const pages = ['pagHome', 'pagProducts', 'pagUserPanel', 'pagAdminPanel'];
+const navBtns = { home: 'navHome', products: 'navProducts', userPanel: 'navUser', adminPanel: 'navAdmin' };
+
+function showPage(name) {
+  pages.forEach(p => document.getElementById(p).classList.add('hidden'));
+  const map = { home: 'pagHome', products: 'pagProducts', userPanel: 'pagUserPanel', adminPanel: 'pagAdminPanel' };
+  document.getElementById(map[name]).classList.remove('hidden');
+  
+  Object.values(navBtns).forEach(b => {
+    const el = document.getElementById(b);
+    if (el) el.classList.remove('active');
+  });
+  if (navBtns[name]) {
+    const el = document.getElementById(navBtns[name]);
+    if (el) el.classList.add('active');
+  }
+
+  if (name === 'home') updateStats();
+  if (name === 'products') { renderCatFilter(); renderProducts(); }
+  if (name === 'userPanel') renderUserPanel();
+  if (name === 'adminPanel') renderAdminPanel();
+}
+
+// ===== AUTH =====
+function handleAuthBtn() {
+  if (currentUser) {
+    currentUser = null;
+    sessionStorage.removeItem('fireStoreDatabaseUser');
+    document.getElementById('authBtn').textContent = 'Login';
+    document.getElementById('navUserBtn').classList.add('hidden');
+    document.getElementById('navAdminBtn').classList.add('hidden');
+    showNotif('✅ Logged out successfully!');
+    showPage('home');
+  } else {
+    openModal('modalLogin');
+  }
+}
+
+function openUserRegModal() { openModal('modalUserReg'); }
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+
+  if (!email || !password) { showNotif('⚠️ Please enter both Email and Password!'); return; }
+
+  // Admin login
+  if (email === ADMIN_EMAIL && password === ADMIN_PASS) {
+    currentUser = { email: ADMIN_EMAIL, name: 'Admin', storeName: 'Fire Store Database', isAdmin: true };
+    sessionStorage.setItem('fireStoreDatabaseUser', JSON.stringify(currentUser));
+    document.getElementById('authBtn').textContent = 'Logout';
+    document.getElementById('navAdminBtn').classList.remove('hidden');
+    document.getElementById('navUserBtn').classList.remove('hidden');
+    closeModal('modalLogin');
+    showNotif('🔥 Logged in as Admin!');
+    showPage('adminPanel');
+    return;
+  }
+
+  const user = db.users.find(u => u.email === email && u.password === password);
+  if (!user) { showNotif('❌ Incorrect Email or Password!'); return; }
+
+  currentUser = { ...user };
+  sessionStorage.setItem('fireStoreDatabaseUser', JSON.stringify(currentUser));
+  document.getElementById('authBtn').textContent = 'Logout';
+  document.getElementById('navUserBtn').classList.remove('hidden');
+  closeModal('modalLogin');
+  showNotif(`🔥 Welcome back, ${currentUser.name}!`);
+  showPage('userPanel');
+}
+
+function doAdminLogin() {
+  const email = document.getElementById('adminEmail').value.trim();
+  const pass = document.getElementById('adminPass').value.trim();
+  if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+    currentUser = { email: ADMIN_EMAIL, name: 'Admin', storeName: 'Fire Store Database', isAdmin: true };
+    sessionStorage.setItem('fireStoreDatabaseUser', JSON.stringify(currentUser));
+    document.getElementById('authBtn').textContent = 'Logout';
+    document.getElementById('navAdminBtn').classList.remove('hidden');
+    document.getElementById('navUserBtn').classList.remove('hidden');
+    closeModal('modalAdminLogin');
+    showNotif('🔥 Admin Panel Open!');
+    showPage('adminPanel');
+  } else {
+    showNotif('❌ Incorrect Admin credentials!');
+  }
+}
+
+function doRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const storeName = document.getElementById('regStoreName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+
+  if (!name || !storeName || !email || !password) { showNotif('⚠️ All fields are required!'); return; }
+  if (db.users.find(u => u.email === email)) { showNotif('⚠️ Email is already registered!'); return; }
+  if (email === ADMIN_EMAIL) { showNotif('⚠️ That email cannot be used!'); return; }
+
+  const user = { id: 'u' + Date.now(), name, storeName, email, password, phone, createdAt: new Date().toLocaleString() };
+  db.users.push(user);
+  saveDB();
+
+  currentUser = { ...user };
+  sessionStorage.setItem('fireStoreDatabaseUser', JSON.stringify(currentUser));
+  document.getElementById('authBtn').textContent = 'Logout';
+  document.getElementById('navUserBtn').classList.remove('hidden');
+  closeModal('modalUserReg');
+  showNotif(`🔥 Welcome ${name}! Your store has been created!`);
+  showPage('userPanel');
+}
+
+// ===== CATEGORIES =====
+function addCategory() {
+  const name = document.getElementById('newCatInput').value.trim();
+  const icon = document.getElementById('newCatIcon').value.trim() || '📦';
+  if (!name) { showNotif('⚠️ Please enter a category name!'); return; }
+  db.categories.push({ id: 'cat' + Date.now(), name, icon });
+  saveDB();
+  document.getElementById('newCatInput').value = '';
+  document.getElementById('newCatIcon').value = '';
+  renderAdminCategories();
+  showNotif('✅ Category added!');
+}
+
+function deleteCategory(id) {
+  if (!confirm('Delete this category? Related products will also be deleted.')) return;
+  db.categories = db.categories.filter(c => c.id !== id);
+  db.products = db.products.filter(p => p.category !== id);
+  saveDB();
+  renderAdminCategories();
+  showNotif('🗑️ Category deleted!');
+}
+
+function editCategory(id) {
+  const cat = db.categories.find(c => c.id === id);
+  const newName = prompt('New category name:', cat.name);
+  if (!newName) return;
+  const newIcon = prompt('New icon emoji:', cat.icon);
+  cat.name = newName.trim();
+  cat.icon = newIcon ? newIcon.trim() : cat.icon;
+  saveDB();
+  renderAdminCategories();
+  showNotif('✅ Category updated!');
+}
+
+function renderAdminCategories() {
+  const el = document.getElementById('catList');
+  if (!el) return;
+  if (db.categories.length === 0) { el.innerHTML = '<p class="text-blue-300">No categories.</p>'; return; }
+  el.innerHTML = db.categories.map(c => `
+    <div class="flex items-center justify-between p-3 mb-2 rounded-xl" style="background:#0a0f2c; border:1px solid #2563eb33;">
+      <span>${c.icon} <span class="font-semibold">${c.name}</span>
+        <span class="ml-2 text-xs text-blue-400">(${db.products.filter(p=>p.category===c.id).length} products)</span>
+      </span>
+      <div class="flex gap-2">
+        <button onclick="editCategory('${c.id}')" class="blue-btn px-3 py-1 rounded-lg text-xs">✏️ Edit</button>
+        <button onclick="deleteCategory('${c.id}')" class="fire-btn px-3 py-1 rounded-lg text-xs">🗑️ Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== PRODUCTS =====
+function toggleDescHint() {
+  const isHtml = document.getElementById('prodDescIsHtml').checked;
+  document.getElementById('descHint').textContent = isHtml
+    ? 'HTML mode — paste full HTML/CSS code. Enable "Full View" below to let buyers open it as a complete page.'
+    : 'Plain text mode — write a normal description.';
+}
+
+function copyProductUrl() {
+  const text = document.getElementById('prodUrlChip').textContent;
+  navigator.clipboard?.writeText(text).then(() => {
+    showNotif('🔗 Product URL copied!');
+  }).catch(() => showNotif('⚠️ Could not copy automatically — copy manually.'));
+}
+
+function openAddProductModal(productId = null) {
+  if (!currentUser) { openModal('modalLogin'); return; }
+  editingProductId = productId;
+  
+  // Populate category dropdown
+  const sel = document.getElementById('prodCategory');
+  sel.innerHTML = db.categories.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+
+  const urlWrap = document.getElementById('prodUrlChipWrap');
+
+  if (productId) {
+    const p = db.products.find(x => x.id === productId);
+    if (!p) return;
+    document.getElementById('addProductTitle').textContent = 'Edit Product';
+    document.getElementById('saveProductBtn').textContent = '💾 Update Product';
+    document.getElementById('prodName').value = p.name;
+    document.getElementById('prodPrice').value = p.price;
+    document.getElementById('prodCategory').value = p.category;
+    document.getElementById('prodDesc').value = p.description;
+    document.getElementById('prodImage').value = p.image || '';
+    document.getElementById('prodContact').value = p.contact || '';
+    document.getElementById('prodEmoji').value = p.emoji || '';
+    document.getElementById('prodDescIsHtml').checked = !!p.descIsHtml;
+    document.getElementById('prodAllowFullView').checked = !!p.allowFullView;
+    toggleDescHint();
+    urlWrap.classList.remove('hidden');
+    document.getElementById('prodUrlChip').textContent = getProductUrl(p);
+  } else {
+    document.getElementById('addProductTitle').textContent = 'Add Product';
+    document.getElementById('saveProductBtn').textContent = '🔥 Add Product';
+    document.getElementById('prodName').value = '';
+    document.getElementById('prodPrice').value = '';
+    document.getElementById('prodDesc').value = '';
+    document.getElementById('prodImage').value = '';
+    document.getElementById('prodContact').value = currentUser.phone || '';
+    document.getElementById('prodEmoji').value = '🔥';
+    document.getElementById('prodDescIsHtml').checked = false;
+    document.getElementById('prodAllowFullView').checked = false;
+    toggleDescHint();
+    urlWrap.classList.add('hidden');
+  }
+  openModal('modalAddProduct');
+}
+
+function saveProduct() {
+  const name = document.getElementById('prodName').value.trim();
+  const price = document.getElementById('prodPrice').value.trim();
+  const category = document.getElementById('prodCategory').value;
+  const description = document.getElementById('prodDesc').value.trim();
+  const image = document.getElementById('prodImage').value.trim();
+  const contact = document.getElementById('prodContact').value.trim();
+  const emoji = document.getElementById('prodEmoji').value.trim() || '🔥';
+  const descIsHtml = document.getElementById('prodDescIsHtml').checked;
+  const allowFullView = document.getElementById('prodAllowFullView').checked;
+
+  if (!name || !price || !description) { showNotif('⚠️ Please fill all required fields!'); return; }
+
+  let savedProduct;
+  if (editingProductId) {
+    const p = db.products.find(x => x.id === editingProductId);
+    if (p) {
+      // Regenerate slug if the name changed
+      if (slugify(p.name) !== slugify(name) || !p.slug) {
+        p.slug = ensureUniqueSlug(name, p.id);
+      }
+      p.name = name; p.price = parseFloat(price); p.category = category;
+      p.description = description; p.image = image; p.contact = contact; p.emoji = emoji;
+      p.descIsHtml = descIsHtml; p.allowFullView = allowFullView;
+      p.updatedAt = new Date().toLocaleString();
+      savedProduct = p;
+    }
+    showNotif('✅ Product updated!');
+  } else {
+    savedProduct = {
+      id: 'p' + Date.now(),
+      slug: ensureUniqueSlug(name),
+      name, price: parseFloat(price), category, description,
+      image, contact, emoji, descIsHtml, allowFullView,
+      sellerId: currentUser.id || 'admin',
+      sellerName: currentUser.storeName || currentUser.name,
+      createdAt: new Date().toLocaleString(),
+      views: 0,
+    };
+    db.products.push(savedProduct);
+    showNotif('🔥 Product added!');
+  }
+
+  saveDB();
+  closeModal('modalAddProduct');
+  
+  if (currentUser.isAdmin) renderAdminAllProducts();
+  else renderUserPanel();
+  
+  renderProducts();
+  updateStats();
+}
+
+function deleteProduct(id) {
+  if (!confirm('Delete this product?')) return;
+  db.products = db.products.filter(p => p.id !== id);
+  saveDB();
+  renderUserPanel();
+  renderAdminAllProducts();
+  renderProducts();
+  updateStats();
+  showNotif('🗑️ Product deleted!');
+}
+
+function viewProduct(id) {
+  const p = db.products.find(x => x.id === id);
+  if (!p) return;
+  p.views = (p.views || 0) + 1;
+  if (!p.slug) p.slug = ensureUniqueSlug(p.name, p.id);
+  saveDB();
+
+  const cat = db.categories.find(c => c.id === p.category);
+  const canEdit = currentUser && (currentUser.isAdmin || currentUser.id === p.sellerId);
+  const productUrl = getProductUrl(p);
+
+  const descBlock = p.descIsHtml
+    ? `<div class="desc-rendered">${p.description}</div>`
+    : `<p class="desc-plain mb-0">${escapeHtml(p.description)}</p>`;
+
+  document.getElementById('productDetailContent').innerHTML = `
+    <div>
+      ${p.image ? `<img src="${p.image}" alt="${p.name}" class="w-full h-64 object-cover rounded-xl mb-4" onerror="this.style.display='none'">` 
+                : `<div class="w-full h-48 flex items-center justify-center text-8xl mb-4" style="background:#0d1b4b; border-radius:12px;">${p.emoji || '🔥'}</div>`}
+      <div class="flex items-start justify-between mb-3">
+        <h2 class="text-2xl font-bold text-white">${p.emoji || ''} ${p.name}</h2>
+        <div class="view-count">👁️ ${p.views} views</div>
+      </div>
+      <div class="flex flex-wrap gap-3 mb-4">
+        <span class="price-tag">LKR ${Number(p.price).toLocaleString()}</span>
+        ${cat ? `<span class="tag">${cat.icon} ${cat.name}</span>` : ''}
+        ${p.allowFullView ? `<span class="badge">🖥️ Full View available</span>` : ''}
+      </div>
+      <div class="mb-4">${descBlock}</div>
+      ${p.allowFullView ? `<button onclick="openFullView('${p.id}')" class="blue-btn w-full py-3 rounded-xl font-semibold text-sm mb-4">🖥️ Open Full View</button>` : ''}
+      <div class="flex items-center gap-2 mb-4 p-3 rounded-xl" style="background:#0a0f2c; border:1px solid #2563eb33;">
+        <span class="text-2xl">🏪</span>
         <div>
-          <button class="back-btn" onclick="goHome()">← Back Home</button>
-          <h2>Admin Dashboard</h2>
-          <p class="muted">Admin can add, edit or delete all product posts from all stores.</p>
+          <div class="font-semibold text-white">${p.sellerName}</div>
+          <div class="text-blue-300 text-sm">${p.contact || 'Contact not provided'}</div>
         </div>
-        <button class="primary-btn" onclick="openProductForm('admin')">+ Add Admin Product</button>
       </div>
-
-      <div class="admin-tools glass-card">
-        <input id="adminSearchInput" type="search" placeholder="Search all user posts..." oninput="renderAdminDashboard()" />
-        <select id="adminStoreFilter" onchange="renderAdminDashboard()">
-          <option value="all">All Stores</option>
-        </select>
+      <div class="url-chip mb-4">
+        <span style="flex:1;">🔗 ${productUrl}</span>
+        <button type="button" onclick="navigator.clipboard.writeText('${productUrl}'); showNotif('🔗 Link copied!')" class="blue-btn px-3 py-1 rounded-lg text-xs">📋 Copy Link</button>
       </div>
-
-      <section id="adminProductGrid" class="product-grid"></section>
-      <div id="adminEmpty" class="empty-state hidden">
-        <h3>No products yet</h3>
-        <p>Add a product as admin or wait until users create stores.</p>
+      <div class="text-xs text-blue-400 mb-4">Posted: ${p.createdAt}${p.updatedAt ? ' | Updated: ' + p.updatedAt : ''}</div>
+      <div class="flex gap-3">
+        ${p.contact ? `<a href="https://wa.me/${p.contact.replace(/\D/g,'')}?text=Hi! I'm interested in your product: ${encodeURIComponent(p.name)}" target="_blank" class="fire-btn flex-1 py-3 rounded-xl font-bold text-center text-white no-underline" style="display:flex; align-items:center; justify-content:center; text-decoration:none;">💬 WhatsApp Seller</a>` : ''}
+        ${canEdit ? `<button onclick="closeModal('modalProductDetail'); openAddProductModal('${p.id}')" class="blue-btn px-4 py-3 rounded-xl font-semibold text-sm">✏️ Edit</button>` : ''}
+        ${canEdit ? `<button onclick="deleteProduct('${p.id}'); closeModal('modalProductDetail')" class="px-4 py-3 rounded-xl font-semibold text-sm" style="background:#ef444422; border:1px solid #ef4444; color:#ef4444; cursor:pointer;">🗑️</button>` : ''}
       </div>
-    </section>
-  </main>
+    </div>
+  `;
+  openModal('modalProductDetail');
 
-  <div id="productModal" class="modal hidden" aria-hidden="true">
-    <div class="modal-card glass-card detail-modal">
-      <button class="close-btn" onclick="closeProductModal()">×</button>
-      <div id="productDetail"></div>
+  // Reflect the unique URL in the address bar without reloading
+  try {
+    const url = new URL(window.location);
+    url.searchParams.set('product', p.slug);
+    window.history.replaceState({}, '', url);
+  } catch (e) {}
+
+  // Update view count display in grid
+  renderProducts();
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+// ===== FULL VIEW (renders product description as a full standalone page) =====
+function openFullView(id) {
+  const p = db.products.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('fullViewTitle').textContent = `${p.emoji || '🖥️'} ${p.name} — Full View`;
+  const iframe = document.getElementById('fullViewIframe');
+  const content = p.descIsHtml ? p.description : `<pre style="white-space:pre-wrap; font-family:Inter,sans-serif; padding:24px; font-size:16px;">${escapeHtml(p.description)}</pre>`;
+  iframe.srcdoc = content;
+  window._fullViewContent = content;
+  document.getElementById('modalFullView').classList.remove('hidden');
+}
+
+function closeFullView() {
+  document.getElementById('modalFullView').classList.add('hidden');
+  document.getElementById('fullViewIframe').srcdoc = '';
+}
+
+function closeProductDetail() {
+  closeModal('modalProductDetail');
+  try {
+    const url = new URL(window.location);
+    url.searchParams.delete('product');
+    window.history.replaceState({}, '', url);
+  } catch (e) {}
+}
+
+function openFullViewInNewTab() {
+  const content = window._fullViewContent || '';
+  const w = window.open('', '_blank');
+  if (w) { w.document.open(); w.document.write(content); w.document.close(); }
+}
+
+// ===== RENDER PRODUCTS GRID =====
+function getCatName(catId) {
+  const cat = db.categories.find(c => c.id === catId);
+  return cat ? `${cat.icon} ${cat.name}` : 'Uncategorized';
+}
+
+function plainSnippet(p, len = 60) {
+  let text = p.description || '';
+  if (p.descIsHtml) {
+    const div = document.createElement('div');
+    div.innerHTML = text;
+    text = div.textContent || div.innerText || '';
+  }
+  return text.substring(0, len);
+}
+
+function renderProductCard(p) {
+  return `
+    <div class="card cursor-pointer overflow-hidden" onclick="viewProduct('${p.id}')">
+      ${p.image 
+        ? `<img src="${p.image}" alt="${p.name}" class="product-img" onerror="this.outerHTML='<div class=\\'product-img-placeholder\\'>${p.emoji || '🔥'}</div>'">`
+        : `<div class="product-img-placeholder">${p.emoji || '🔥'}</div>`}
+      <div class="p-4">
+        <div class="flex items-center justify-between mb-1">
+          <div class="text-xs text-blue-400">${getCatName(p.category)}</div>
+          ${p.allowFullView ? `<span class="badge" title="Full View available">🖥️</span>` : ''}
+        </div>
+        <div class="font-bold text-white text-sm mb-1 truncate">${p.name}</div>
+        <div class="text-xs text-blue-300 mb-2 truncate">${plainSnippet(p, 60)}...</div>
+        <div class="flex items-center justify-between">
+          <span class="price-tag text-base">LKR ${Number(p.price).toLocaleString()}</span>
+          <span class="view-count">👁️ ${p.views || 0}</span>
+        </div>
+        <div class="text-xs text-blue-400 mt-2 truncate">🏪 ${p.sellerName}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  const noP = document.getElementById('noProducts');
+  const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+
+  let filtered = db.products;
+  if (currentCatFilter !== 'all') filtered = filtered.filter(p => p.category === currentCatFilter);
+  if (search) filtered = filtered.filter(p =>
+    p.name.toLowerCase().includes(search) ||
+    p.description.toLowerCase().includes(search) ||
+    p.sellerName.toLowerCase().includes(search)
+  );
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    noP.classList.remove('hidden');
+  } else {
+    noP.classList.add('hidden');
+    grid.innerHTML = filtered.map(renderProductCard).join('');
+  }
+  if (typeof refreshReveal === 'function') refreshReveal();
+}
+
+function renderCatFilter() {
+  const el = document.getElementById('catFilter');
+  el.innerHTML = `<span class="tag ${currentCatFilter === 'all' ? 'active' : ''}" onclick="filterCat('all', this)">All</span>` +
+    db.categories.map(c => `<span class="tag ${currentCatFilter === c.id ? 'active' : ''}" onclick="filterCat('${c.id}', this)">${c.icon} ${c.name}</span>`).join('');
+}
+
+function filterCat(id, el) {
+  currentCatFilter = id;
+  document.querySelectorAll('#catFilter .tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderProducts();
+}
+
+// ===== USER PANEL =====
+function renderUserPanel() {
+  if (!currentUser) return;
+  const welcome = document.getElementById('userWelcome');
+  welcome.innerHTML = `
+    <div class="flex items-center gap-4">
+      <div class="text-5xl">🏪</div>
+      <div>
+        <div class="text-xl font-bold text-white">${currentUser.storeName || currentUser.name}</div>
+        <div class="text-blue-300 text-sm">${currentUser.email}</div>
+        ${currentUser.phone ? `<div class="text-blue-300 text-sm">📞 ${currentUser.phone}</div>` : ''}
+      </div>
+    </div>
+  `;
+
+  const myProducts = currentUser.isAdmin 
+    ? db.products 
+    : db.products.filter(p => p.sellerId === currentUser.id);
+  
+  const listEl = document.getElementById('userProductsList');
+  if (myProducts.length === 0) {
+    listEl.innerHTML = `<div class="text-center py-16 text-blue-300"><div class="text-5xl mb-4">📦</div><p>No products. Add one!</p></div>`;
+    return;
+  }
+
+  listEl.innerHTML = myProducts.map(p => `
+    <div class="user-product-card">
+      <div class="flex gap-4">
+        <div style="font-size:40px;">${p.emoji || '🔥'}</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-start justify-between gap-2">
+            <div class="font-bold text-white truncate">${p.name} ${p.allowFullView ? '<span class="badge" title="Full View enabled">🖥️</span>' : ''}</div>
+            <div class="view-count shrink-0">👁️ ${p.views || 0}</div>
+          </div>
+          <div class="text-xs text-blue-400 mb-1">${getCatName(p.category)}</div>
+          <div class="price-tag text-sm">LKR ${Number(p.price).toLocaleString()}</div>
+          <div class="text-xs text-blue-300 mt-1">${plainSnippet(p, 80)}...</div>
+          <div class="url-chip mt-2" style="font-size:11px;">
+            <span style="flex:1;">🔗 ${getProductUrl(p)}</span>
+            <button type="button" onclick="navigator.clipboard.writeText('${getProductUrl(p)}'); showNotif('🔗 Link copied!')" class="blue-btn px-2 py-1 rounded-lg text-xs">📋</button>
+          </div>
+          <div class="text-xs text-blue-400 mt-1">📅 ${p.createdAt}</div>
+          ${currentUser.isAdmin && p.sellerName ? `<div class="text-xs text-orange-400 mt-1">🏪 ${p.sellerName}</div>` : ''}
+        </div>
+      </div>
+      <div class="flex gap-2 mt-3">
+        <button onclick="viewProduct('${p.id}')" class="blue-btn px-4 py-2 rounded-xl text-xs font-semibold flex-1">👁️ View</button>
+        ${p.allowFullView ? `<button onclick="openFullView('${p.id}')" class="blue-btn px-4 py-2 rounded-xl text-xs font-semibold flex-1">🖥️ Full View</button>` : ''}
+        <button onclick="openAddProductModal('${p.id}')" class="fire-btn px-4 py-2 rounded-xl text-xs font-semibold flex-1">✏️ Edit</button>
+        <button onclick="deleteProduct('${p.id}')" class="px-4 py-2 rounded-xl text-xs font-semibold" style="background:#ef444422; border:1px solid #ef4444; color:#ef4444; cursor:pointer;">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== ADMIN PANEL =====
+function adminTab(tab, btn) {
+  ['tabCategories', 'tabAllProducts', 'tabUsers'].forEach(t => {
+    document.getElementById(t)?.classList.add('hidden');
+  });
+  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1))?.classList.remove('hidden');
+  document.querySelectorAll('#pagAdminPanel .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function renderAdminPanel() {
+  renderAdminCategories();
+  renderAdminAllProducts();
+  renderAdminUsers();
+}
+
+function renderAdminAllProducts() {
+  const el = document.getElementById('adminProductsList');
+  if (!el) return;
+  if (db.products.length === 0) {
+    el.innerHTML = '<div class="text-center py-12 text-blue-300"><div class="text-5xl mb-4">📦</div><p>No products.</p></div>';
+    return;
+  }
+  el.innerHTML = `
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-bold text-white text-lg">All Products (${db.products.length})</h3>
+      <button onclick="openAddProductModal()" class="fire-btn px-4 py-2 rounded-xl text-sm font-semibold">+ Add Product</button>
+    </div>
+    ${db.products.map(p => `
+      <div class="admin-panel-section">
+        <div class="flex items-start gap-4">
+          <div style="font-size:36px;">${p.emoji || '🔥'}</div>
+          <div class="flex-1">
+            <div class="flex items-start justify-between gap-2">
+              <div class="font-bold text-white">${p.name} ${p.allowFullView ? '<span class="badge" title="Full View enabled">🖥️</span>' : ''}</div>
+              <div class="view-count shrink-0">👁️ ${p.views || 0} views</div>
+            </div>
+            <div class="text-xs text-blue-400">${getCatName(p.category)} | <span class="price-tag text-xs">LKR ${Number(p.price).toLocaleString()}</span></div>
+            <div class="text-xs text-orange-400 mt-1">🏪 ${p.sellerName}</div>
+            <div class="text-xs text-blue-300 mt-1">${plainSnippet(p, 100)}</div>
+            <div class="url-chip mt-2" style="font-size:11px;">
+              <span style="flex:1;">🔗 ${getProductUrl(p)}</span>
+              <button type="button" onclick="navigator.clipboard.writeText('${getProductUrl(p)}'); showNotif('🔗 Link copied!')" class="blue-btn px-2 py-1 rounded-lg text-xs">📋</button>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2 mt-3">
+          <button onclick="viewProduct('${p.id}')" class="blue-btn px-3 py-1 rounded-lg text-xs">👁️ View</button>
+          ${p.allowFullView ? `<button onclick="openFullView('${p.id}')" class="blue-btn px-3 py-1 rounded-lg text-xs">🖥️ Full View</button>` : ''}
+          <button onclick="openAddProductModal('${p.id}')" class="fire-btn px-3 py-1 rounded-lg text-xs">✏️ Edit</button>
+          <button onclick="deleteProduct('${p.id}')" class="px-3 py-1 rounded-lg text-xs" style="background:#ef444422; border:1px solid #ef4444; color:#ef4444; cursor:pointer;">🗑️ Delete</button>
+        </div>
+      </div>
+    `).join('')}
+  `;
+}
+
+function renderAdminUsers() {
+  const el = document.getElementById('adminUsersList');
+  if (!el) return;
+  if (db.users.length === 0) {
+    el.innerHTML = '<div class="text-center py-12 text-blue-300"><div class="text-5xl mb-4">👥</div><p>No registered users.</p></div>';
+    return;
+  }
+  el.innerHTML = `
+    <h3 class="font-bold text-white text-lg mb-4">Registered Users (${db.users.length})</h3>
+    ${db.users.map(u => `
+      <div class="admin-panel-section">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="text-4xl">👤</div>
+            <div>
+              <div class="font-bold text-white">${u.name}</div>
+              <div class="text-blue-300 text-sm">🏪 ${u.storeName}</div>
+              <div class="text-blue-400 text-xs">${u.email}</div>
+              ${u.phone ? `<div class="text-blue-400 text-xs">📞 ${u.phone}</div>` : ''}
+              <div class="text-blue-400 text-xs">📦 ${db.products.filter(p => p.sellerId === u.id).length} products | Joined: ${u.createdAt}</div>
+            </div>
+          </div>
+          <button onclick="deleteUser('${u.id}')" class="px-3 py-1 rounded-lg text-xs" style="background:#ef444422; border:1px solid #ef4444; color:#ef4444; cursor:pointer;">🗑️ Remove</button>
+        </div>
+      </div>
+    `).join('')}
+  `;
+}
+
+function deleteUser(id) {
+  if (!confirm('Delete this user? Their products will also be deleted.')) return;
+  db.products = db.products.filter(p => p.sellerId !== id);
+  db.users = db.users.filter(u => u.id !== id);
+  saveDB();
+  renderAdminPanel();
+  renderProducts();
+  showNotif('🗑️ User deleted!');
+}
+
+// ===== HOME PAGE =====
+function updateStats() {
+  document.getElementById('statProducts').textContent = db.products.length;
+  document.getElementById('statSellers').textContent = db.users.length;
+  document.getElementById('statCats').textContent = db.categories.length;
+  document.getElementById('statViews').textContent = db.products.reduce((s, p) => s + (p.views || 0), 0);
+  if (typeof animateStats === 'function') animateStats();
+
+  // Featured products (latest 6)
+  const grid = document.getElementById('featuredGrid');
+  const featured = [...db.products].reverse().slice(0, 6);
+  if (featured.length === 0) {
+    grid.innerHTML = `<div class="col-span-3 text-center py-12 text-blue-300"><div class="text-5xl mb-4">🛒</div><p>No products yet. Add the first one!</p></div>`;
+  } else {
+    grid.innerHTML = featured.map(renderProductCard).join('');
+  }
+  if (typeof refreshReveal === 'function') refreshReveal();
+}
+
+// ===== FOOTER ADMIN LINK =====
+function tryAdminAccess() {
+  if (currentUser?.isAdmin) { showPage('adminPanel'); return; }
+  openModal('modalAdminLogin');
+}
+
+// ===== INIT =====
+loadDB();
+updateStats();
+updateNav();
+
+function updateNav() {
+  if (currentUser) {
+    document.getElementById('authBtn').textContent = 'Logout';
+    if (currentUser.isAdmin) {
+      document.getElementById('navAdminBtn').classList.remove('hidden');
+    }
+    document.getElementById('navUserBtn').classList.remove('hidden');
+  }
+}
+
+// Add some sample products if empty
+if (db.products.length === 0 && db.users.length === 0) {
+  db.products.push(
+    { id: 'sample1', slug: 'fire-phone-case', name: 'Fire Phone Case', price: 1500, category: 'cat1', description: 'Premium quality fire-resistant phone case. All models available. Durable and stylish!', descIsHtml: false, allowFullView: false, emoji: '📱', image: 'https://images.pexels.com/photos/4226140/pexels-photo-4226140.jpeg?auto=compress&cs=tinysrgb&w=600', sellerId: 'admin', sellerName: 'Fire Store Database', contact: '0771234567', createdAt: new Date().toLocaleString(), views: 24 },
+    { id: 'sample2', slug: 'fire-hoodie', name: 'Fire Hoodie', price: 3500, category: 'cat2', description: 'Exclusive Fire Store Database branded hoodie. Premium quality fabric. S/M/L/XL available!', descIsHtml: false, allowFullView: false, emoji: '🔥', image: 'https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=600', sellerId: 'admin', sellerName: 'Fire Store Database', contact: '0771234567', createdAt: new Date().toLocaleString(), views: 15 }
+  );
+  saveDB();
+  updateStats();
+}
+
+// ===== SCROLL REVEAL ANIMATIONS =====
+function initScrollReveal() {
+  const targets = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(t => t.classList.add('visible'));
+    return;
+  }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  targets.forEach(t => obs.observe(t));
+}
+
+// Re-run reveal whenever featured grid updates (cards added dynamically)
+function refreshReveal() {
+  document.querySelectorAll('#featuredGrid .card, .grid-products .card').forEach((el, i) => {
+    if (!el.classList.contains('reveal')) {
+      el.classList.add('reveal', 'reveal-delay-' + ((i % 4) + 1));
+    }
+  });
+  initScrollReveal();
+}
+
+// ===== HERO FLOATING PARTICLES =====
+function spawnParticles() {
+  const wrap = document.getElementById('heroParticles');
+  if (!wrap) return;
+  const count = 18;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = 4 + Math.random() * 8;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    wrap.appendChild(p);
+  }
+}
+
+// ===== BACK TO TOP =====
+function initBackToTop() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) btn.classList.add('show');
+    else btn.classList.remove('show');
+  });
+}
+
+// ===== STAT COUNT-UP ANIMATION =====
+function animateStats() {
+  const ids = ['statProducts', 'statSellers', 'statCats', 'statViews'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const target = parseInt(el.textContent, 10) || 0;
+    let current = 0;
+    const steps = 30;
+    const inc = target / steps || 0;
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      current += inc;
+      el.textContent = Math.min(Math.round(current), target);
+      if (step >= steps) { el.textContent = target; clearInterval(timer); }
+    }, 30);
+  });
+}
+
+spawnParticles();
+initBackToTop();
+initScrollReveal();
+checkDeepLink();
+</script>
+
+<!-- Footer -->
+<footer style="background:#060b1e; border-top:1px solid #2563eb22;" class="py-8 px-6 mt-16">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex flex-wrap justify-between gap-6 mb-6">
+      <div>
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-2xl flame-icon">🔥</span>
+          <span class="font-bold text-lg text-white">Fire Store Database</span>
+        </div>
+        <p class="text-blue-400 text-sm max-w-xs">Sri Lanka's best online marketplace. The best place to sell and buy your products!</p>
+      </div>
+      <div>
+        <div class="font-semibold text-white mb-3">Quick Links</div>
+        <div class="space-y-2 text-sm text-blue-400">
+          <div class="cursor-pointer hover:text-orange-400" onclick="showPage('home')">🏠 Home</div>
+          <div class="cursor-pointer hover:text-orange-400" onclick="showPage('products')">🛒 Products</div>
+          <div class="cursor-pointer hover:text-orange-400" onclick="openUserRegModal()">🏪 Create Store</div>
+          <div class="cursor-pointer hover:text-orange-400" onclick="tryAdminAccess()">⚙️ Admin</div>
+        </div>
+      </div>
+      <div>
+        <div class="font-semibold text-white mb-3">Categories</div>
+        <div class="space-y-2 text-sm text-blue-400" id="footerCats"></div>
+      </div>
+    </div>
+    <div class="border-t border-blue-900 pt-4 text-center text-blue-500 text-xs">
+      © 2025 Fire Store Database. All rights reserved. 🔥 Made with passion
     </div>
   </div>
+</footer>
 
-  <div id="productFormModal" class="modal hidden" aria-hidden="true">
-    <div class="modal-card glass-card">
-      <button class="close-btn" onclick="closeProductForm()">×</button>
-      <h2 id="productFormTitle">Add Product</h2>
-      <p class="muted" id="productFormHint">Add product details below.</p>
-      <form id="productForm" class="stack-form">
-        <input type="hidden" id="editingProductId" />
-        <label>
-          Product Name
-          <input id="productName" type="text" placeholder="Example: Gaming Mouse" required />
-        </label>
-        <label>
-          Custom Category Name
-          <input id="productCategory" type="text" placeholder="Example: Electronics" required />
-        </label>
-        <label>
-          Price
-          <input id="productPrice" type="text" placeholder="Example: Rs. 2,500" required />
-        </label>
-        <label>
-          Description
-          <textarea id="productDescription" rows="4" placeholder="Write product details..." required></textarea>
-        </label>
-        <label>
-          Image URL (optional)
-          <input id="productImage" type="url" placeholder="https://example.com/image.jpg" />
-        </label>
-        <button class="primary-btn big" type="submit" id="saveProductBtn">Save Product</button>
-      </form>
-    </div>
-  </div>
+<script>
+// Render footer categories
+function renderFooterCats() {
+  const el = document.getElementById('footerCats');
+  if (el) {
+    el.innerHTML = db.categories.slice(0, 5).map(c => 
+      `<div class="cursor-pointer hover:text-orange-400" onclick="currentCatFilter='${c.id}'; showPage('products')">${c.icon} ${c.name}</div>`
+    ).join('');
+  }
+}
+renderFooterCats();
 
-  <div id="toast" class="toast hidden"></div>
+// Re-render footer after admin adds category
+const origAddCategory = addCategory;
+</script>
 
-  <footer>
-    <p>Fire Store database is saved in your browser using LocalStorage. Built only with HTML, CSS and JavaScript.</p>
-  </footer>
-
-  <script src="app.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a140d23e8e45aed1',t:'MTc4Mjg2MDc4NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a14103dcda0a2842',t:'MTc4Mjg2MjgxNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
