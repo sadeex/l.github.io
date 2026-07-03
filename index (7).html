@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fire Database - Sri Lanka's No.1 Content & File Link Sharing Platform. Share posts and download links with the world.">
+  <meta name="keywords" content="Fire Database, file sharing, content sharing, Sri Lanka, download links, Google Drive">
+  <meta name="author" content="Fire Database">
+  <meta property="og:title" content="Fire Database 🔥">
+  <meta property="og:description" content="Share posts & download links with the world. Register free, post instantly.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0a0f2c">
+  <title>Fire Database 🔥</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase SDK (v11) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import {
+      getFirestore, collection, doc, addDoc, setDoc, updateDoc, deleteDoc,
+      onSnapshot, getDoc, query, orderBy, serverTimestamp, increment
+    } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
+    import {
+      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+      signOut, onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey:            "AIzaSyADm9ZobsTetqxr8ZnrgTi1fCp565tYniA",
+      authDomain:        "daatabase-69705.firebaseapp.com",
+      projectId:         "daatabase-69705",
+      storageBucket:     "daatabase-69705.firebasestorage.app",
+      messagingSenderId: "846363286306",
+      appId:             "1:846363286306:web:9ad3fd1180c4f50cbfa37b"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const db   = getFirestore(app);
+    const auth = getAuth(app);
+
+    // Expose Firebase to global scope for app.js
+    window._fb = {
+      db, auth,
+      collection, doc, addDoc, setDoc, updateDoc, deleteDoc,
+      onSnapshot, getDoc, query, orderBy, serverTimestamp, increment,
+      createUserWithEmailAndPassword, signInWithEmailAndPassword,
+      signOut, onAuthStateChanged
+    };
+
+    // Listen to auth state changes
+    onAuthStateChanged(auth, user => {
+      window._fbUser = user || null;
+      if (typeof window.onFBAuthChange === 'function') {
+        window.onFBAuthChange(user);
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div id="fbLoad">
+    <div style="font-size:3rem;animation:flicker 1.5s ease-in-out infinite alternate;">🔥</div>
+    <div class="spin"></div>
+    <div style="color:#93c5fd;font-size:14px;">Connecting to Fire Database…</div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="notif" class="notif hidden"></div>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav>
+    <div class="nav-in">
+      <div class="logo" onclick="goPage('home')">
+        <span class="logo-flame">🔥</span>
+        <div>
+          <div class="logo-text">Fire Database</div>
+          <div class="logo-sub">Your Fire Storage</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <button class="nav-btn active" id="nb-home"   onclick="goPage('home')">🏠 <span>Home</span></button>
+        <button class="nav-btn"        id="nb-browse" onclick="goPage('browse')">📂 <span>Browse</span></button>
+        <button class="nav-btn hidden" id="nb-panel"  onclick="goPage('panel')">🗂️ <span>My Panel</span></button>
+        <button class="nav-btn hidden" id="nb-admin"  onclick="goPage('admin')">⚙️ <span>Admin</span></button>
+        <button class="btn btn-fire btn-sm" id="authBtn" style="margin-left:4px;" onclick="handleAuth()">Login</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== PAGE: HOME ===== -->
+  <div id="pg-home">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-parts" id="heroParts"></div>
+      <div class="hero-cnt">
+        <div class="hero-badge">🔥 Sri Lanka's No.1 File & Content Platform</div>
+        <h1 class="hero-title">Fire <span class="fire-text">Database</span></h1>
+        <p class="hero-sub">Share posts & download links with the world. Register free, post instantly. 🚀</p>
+        <div class="hero-btns">
+          <button class="btn btn-fire btn-lg" onclick="goPage('browse')">📂 Browse Content</button>
+          <button class="btn btn-blue btn-lg" onclick="openModal('m-reg')">🔥 Join Free</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stats-in">
+        <div class="stat-item reveal"><div class="stat-num fire-text" id="s-posts">0</div><div class="stat-lbl">Posts</div></div>
+        <div class="stat-item reveal"><div class="stat-num fire-text" id="s-files">0</div><div class="stat-lbl">File Posts</div></div>
+        <div class="stat-item reveal"><div class="stat-num fire-text" id="s-users">0</div><div class="stat-lbl">Members</div></div>
+        <div class="stat-item reveal"><div class="stat-num fire-text" id="s-dls">0</div><div class="stat-lbl">Downloads</div></div>
+      </div>
+    </div>
+
+    <!-- Latest Content -->
+    <div class="section">
+      <div class="section-title reveal">🔥 Latest Content</div>
+      <div class="ftags" id="homeFilter">
+        <span class="ftag on"  onclick="homeFilt('all',this)">All</span>
+        <span class="ftag"     onclick="homeFilt('post',this)">📝 Posts</span>
+        <span class="ftag"     onclick="homeFilt('file',this)">📁 File Links</span>
+      </div>
+      <div class="grid-cards" id="homeGrid"></div>
+      <div style="text-align:center;margin-top:26px;">
+        <button class="btn btn-fire btn-md" onclick="goPage('browse')">View All →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: BROWSE ===== -->
+  <div id="pg-browse" class="hidden">
+    <div class="section">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+        <div class="section-title" style="margin-bottom:0;">📂 Browse Content</div>
+        <input class="inp" style="max-width:270px;" id="searchBox" placeholder="🔍 Search…" oninput="renderBrowse()">
+      </div>
+      <div class="ftags" id="browseFilter">
+        <span class="ftag on" onclick="browseFilt('all',this)">All</span>
+        <span class="ftag"    onclick="browseFilt('post',this)">📝 Posts</span>
+        <span class="ftag"    onclick="browseFilt('file',this)">📁 File Links</span>
+      </div>
+      <div class="grid-cards" id="browseGrid"></div>
+      <div id="browseEmpty" class="empty-state hidden">
+        <div class="empty-icon">🔍</div>
+        <p>No content found.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: USER PANEL ===== -->
+  <div id="pg-panel" class="hidden">
+    <div class="section">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:22px;">
+        <div class="section-title" style="margin-bottom:0;">🗂️ My Panel</div>
+        <button class="btn btn-fire btn-md" onclick="openAddModal()">+ Add Post / File Links</button>
+      </div>
+      <div class="u-hero" id="uHero"></div>
+      <div id="uPosts"></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: ADMIN ===== -->
+  <div id="pg-admin" class="hidden">
+    <div class="section">
+      <div class="section-title">⚙️ Admin Panel</div>
+      <div class="tab-row">
+        <button class="tab-pill active" onclick="adminTab('content',this)">📦 All Content</button>
+        <button class="tab-pill"        onclick="adminTab('users',this)">👥 Users</button>
+        <button class="tab-pill"        onclick="adminTab('stats',this)">📊 Stats</button>
+      </div>
+      <div id="a-content"><div id="aContentList"></div></div>
+      <div id="a-users"   class="hidden"><div id="aUsersList"></div></div>
+      <div id="a-stats"   class="hidden"><div id="aStatsPanel"></div></div>
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <div class="back-top btn btn-fire" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</div>
+
+  <!-- ===== MODALS ===== -->
+
+  <!-- LOGIN MODAL -->
+  <div id="m-login" class="modal-bg hidden">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-icon">🔥</div>
+        <div class="modal-title">Login to Fire Database</div>
+        <div class="modal-sub">Welcome back! 👋</div>
+      </div>
+      <div class="fg">
+        <label class="lbl">Email</label>
+        <input class="inp" type="email" id="l-email" placeholder="your@email.com">
+      </div>
+      <div class="fg">
+        <label class="lbl">Password</label>
+        <input class="inp" type="password" id="l-pass" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="btn btn-fire btn-full btn-lg" onclick="doLogin()" style="margin-bottom:13px;">🔥 Login</button>
+      <div class="divider">or</div>
+      <button class="btn btn-blue btn-full btn-md" onclick="swapModal('m-login','m-reg')">Create account →</button>
+      <div class="modal-foot">
+        <button class="btn btn-ghost btn-full btn-sm" onclick="closeModal('m-login')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER MODAL -->
+  <div id="m-reg" class="modal-bg hidden">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-icon">🏠</div>
+        <div class="modal-title">Create Account</div>
+        <div class="modal-sub">Join Fire Database — it's free!</div>
+      </div>
+      <div class="fg">
+        <label class="lbl">Your Name *</label>
+        <input class="inp" type="text" id="r-name" placeholder="Your full name" maxlength="60">
+      </div>
+      <div class="fg">
+        <label class="lbl">Gmail / Email *</label>
+        <input class="inp" type="email" id="r-email" placeholder="your@gmail.com">
+      </div>
+      <div class="fg">
+        <label class="lbl">Password *</label>
+        <input class="inp" type="password" id="r-pass" placeholder="Min 6 characters" oninput="checkStr(this.value)">
+        <div class="str-bar" id="strBar"></div>
+        <div style="font-size:11px;color:#334155;margin-top:4px;" id="strTxt"></div>
+      </div>
+      <div class="fg">
+        <label class="lbl">Confirm Password *</label>
+        <input class="inp" type="password" id="r-pass2" placeholder="Re-enter password">
+      </div>
+      <button class="btn btn-fire btn-full btn-lg" onclick="doRegister()" style="margin-bottom:13px;">🔥 Create Account</button>
+      <div class="divider">or</div>
+      <button class="btn btn-blue btn-full btn-md" onclick="swapModal('m-reg','m-login')">Already have account? Login →</button>
+      <div class="modal-foot">
+        <button class="btn btn-ghost btn-full btn-sm" onclick="closeModal('m-reg')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT POST MODAL -->
+  <div id="m-add" class="modal-bg hidden">
+    <div class="modal modal-wide">
+      <div class="modal-head">
+        <div class="modal-icon">📦</div>
+        <div class="modal-title" id="addTitle">Add Post / File Links</div>
+      </div>
+
+      <!-- Type Toggle -->
+      <div class="ftags" style="margin-bottom:18px;">
+        <span class="ftag on" id="tp-post" onclick="setType('post')">📝 Post</span>
+        <span class="ftag"    id="tp-file" onclick="setType('file')">📁 File Download Links</span>
+      </div>
+
+      <div class="fg">
+        <label class="lbl">Title *</label>
+        <input class="inp" id="a-title" placeholder="Give your content a title">
+      </div>
+      <div class="fg">
+        <label class="lbl">Description</label>
+        <textarea class="inp" id="a-desc" placeholder="What is this about?"></textarea>
+      </div>
+      <div class="fg">
+        <label class="lbl">Category</label>
+        <select class="inp" id="a-cat">
+          <option value="general">📦 General</option>
+          <option value="education">📚 Education</option>
+          <option value="tech">💻 Tech</option>
+          <option value="design">🎨 Design</option>
+          <option value="music">🎵 Music</option>
+          <option value="video">🎬 Video</option>
+          <option value="document">📄 Documents</option>
+          <option value="image">🖼️ Images</option>
+          <option value="software">⚙️ Software</option>
+          <option value="other">🔥 Other</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="lbl">Cover Image URL (optional)</label>
+        <input class="inp" id="a-cover" placeholder="https://example.com/image.jpg">
+      </div>
+
+      <!-- File Links Section -->
+      <div id="fileLinksSection" class="hidden">
+        <div style="background:#0a1628;border:1px solid #2563eb33;border-radius:14px;padding:16px;margin-bottom:14px;">
+          <div style="font-weight:700;color:#fff;font-size:14px;margin-bottom:4px;">📁 Add Download Links</div>
+          <div style="font-size:12px;color:#475569;line-height:1.6;">
+            Upload your file to Google Drive, Mega, MediaFire, Dropbox, or any hosting site, then paste the <b style="color:#f97316;">download link</b> below.
+          </div>
+        </div>
+        <div id="linksList"></div>
+        <button class="btn btn-blue btn-sm" onclick="addLinkRow()" style="margin-bottom:6px;">+ Add Another Link</button>
+        <div style="font-size:11px;color:#334155;margin-top:6px;">
+          💡 Tip: Google Drive → Share → Anyone with link → Copy link
+        </div>
+      </div>
+
+      <button class="btn btn-fire btn-full btn-lg" id="addSubmitBtn" onclick="submitPost()" style="margin-top:8px;">🔥 Publish</button>
+      <div class="modal-foot">
+        <button class="btn btn-ghost btn-full btn-sm" onclick="closeModal('m-add')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL MODAL -->
+  <div id="m-detail" class="modal-bg hidden">
+    <div class="modal modal-xl">
+      <div id="detailContent"></div>
+      <button class="btn btn-blue btn-full btn-md" onclick="closeModal('m-detail')" style="margin-top:14px;">Close</button>
+    </div>
+  </div>
+
+  <!-- EDIT POST MODAL -->
+  <div id="m-edit" class="modal-bg hidden">
+    <div class="modal modal-wide">
+      <div class="modal-head">
+        <div class="modal-icon">✏️</div>
+        <div class="modal-title">Edit Post</div>
+      </div>
+      <div class="fg">
+        <label class="lbl">Title *</label>
+        <input class="inp" id="e-title" placeholder="Title">
+      </div>
+      <div class="fg">
+        <label class="lbl">Description</label>
+        <textarea class="inp" id="e-desc"></textarea>
+      </div>
+      <div class="fg">
+        <label class="lbl">Category</label>
+        <select class="inp" id="e-cat">
+          <option value="general">📦 General</option>
+          <option value="education">📚 Education</option>
+          <option value="tech">💻 Tech</option>
+          <option value="design">🎨 Design</option>
+          <option value="music">🎵 Music</option>
+          <option value="video">🎬 Video</option>
+          <option value="document">📄 Documents</option>
+          <option value="image">🖼️ Images</option>
+          <option value="software">⚙️ Software</option>
+          <option value="other">🔥 Other</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="lbl">Cover Image URL</label>
+        <input class="inp" id="e-cover" placeholder="https://…">
+      </div>
+      <button class="btn btn-fire btn-full btn-lg" onclick="submitEdit()">💾 Save Changes</button>
+      <div class="modal-foot">
+        <button class="btn btn-ghost btn-full btn-sm" onclick="closeModal('m-edit')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-in">
+      <div>
+        <div class="footer-brand">
+          <span class="footer-brand-icon">🔥</span>
+          <span class="footer-brand-name">Fire Database</span>
+        </div>
+        <p class="footer-desc">Sri Lanka's No.1 content & file link sharing platform.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Quick Links</div>
+        <div class="footer-links">
+          <div class="footer-link" onclick="goPage('home')">🏠 Home</div>
+          <div class="footer-link" onclick="goPage('browse')">📂 Browse</div>
+          <div class="footer-link" onclick="openModal('m-reg')">🔥 Join Free</div>
+          <div class="footer-link" onclick="currentUser?.isAdmin?goPage('admin'):openModal('m-login')">⚙️ Admin</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Supported Link Hosts</div>
+        <div style="font-size:12px;color:#334155;line-height:2.1;">
+          <div>📂 Google Drive</div>
+          <div>🟠 Mega.nz</div>
+          <div>🟦 MediaFire</div>
+          <div>💧 Dropbox</div>
+          <div>☁️ OneDrive</div>
+          <div>✈️ Telegram & more…</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Fire Database. All rights reserved. 🔥 Powered by Firebase
+    </div>
+  </footer>
+
+  <!-- ===== APP SCRIPT ===== -->
+  <script src="app.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a15303eb3fb824d1',t:'MTc4MzA1MTU2Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
