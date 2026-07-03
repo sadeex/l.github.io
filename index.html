@@ -209,49 +209,15 @@ footer{background:#060b1e;border-top:1px solid rgba(37,99,235,.09);padding:36px 
 .footer-link:hover{color:var(--fire)}
 .footer-bottom{border-top:1px solid rgba(37,99,235,.09);margin-top:28px;padding-top:14px;text-align:center;color:#1e293b;font-size:12px}
 
+/* ADVERTISEMENT WRAPPER */
+.ad-box{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:22px auto;padding:14px;background:rgba(13,27,75,.28);border:1px dashed rgba(37,99,235,.28);border-radius:var(--card-radius);max-width:100%;overflow-x:auto;text-align:center}
+.ad-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;opacity:.8}
+
 /* RESPONSIVE */
 @media(max-width:640px){.nav-links .nav-btn span{display:none}.hero-title{font-size:2rem}.stats-in{grid-template-columns:repeat(2,1fr)}.u-hero{flex-direction:column;text-align:center}.modal{padding:20px}}
-
-/* ===== FIRE ADS SYSTEM ===== */
-.ad-slot{display:flex;justify-content:center;align-items:center;margin:18px auto;position:relative;overflow:hidden;min-height:50px;border-radius:12px}
-.ad-leaderboard{background:linear-gradient(145deg,rgba(13,27,75,.4),rgba(10,15,44,.5));border:1px dashed rgba(37,99,235,.22);padding:10px 8px}
-.ad-label{position:absolute;top:4px;left:10px;font-size:9px;color:#1e293b;text-transform:uppercase;letter-spacing:.9px;font-weight:700;z-index:2}
-.ad-infeed{background:rgba(13,27,75,.22);border:1px solid rgba(37,99,235,.14);border-radius:18px;padding:14px;min-height:270px;display:flex;align-items:center;justify-content:center}
-.ad-native-wrap{max-width:720px;margin:24px auto 6px;text-align:center}
-.ad-browse-layout{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start}
-@media(max-width:1020px){.ad-browse-layout{grid-template-columns:1fr}}
-.ad-sidebar{position:sticky;top:78px;display:flex;flex-direction:column;gap:16px}
-@media(max-width:1020px){.ad-sidebar{display:none}}
-.ad-side-box{background:linear-gradient(145deg,#0d1b4b,rgba(10,15,44,.5));border:1px solid rgba(37,99,235,.2);border-radius:16px;padding:12px;text-align:center;min-height:260px;display:flex;align-items:center;justify-content:center;position:relative}
-.ad-sponsor{font-size:10px;color:#334155;text-transform:uppercase;letter-spacing:1px;position:absolute;top:8px;left:0;right:0;text-align:center}
-.ad-sticky-bottom{position:fixed;bottom:0;left:0;right:0;z-index:600;background:rgba(6,11,30,.96);backdrop-filter:blur(12px);border-top:1px solid rgba(249,115,22,.25);padding:6px 8px 4px;display:flex;justify-content:center;align-items:center;box-shadow:0 -4px 24px rgba(0,0,0,.5)}
-.ad-sticky-inner{position:relative}
-.ad-close-btn{position:absolute;top:-10px;right:-10px;background:#0a0f2c;border:1px solid #ef4444;color:#ef4444;font-size:11px;font-weight:700;width:22px;height:22px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5}
-.ad-rail{position:fixed;top:88px;z-index:250;display:none}
-@media(min-width:1450px){.ad-rail{display:block}}
-.ad-rail-left{left:8px}
-.ad-rail-right{right:8px}
-.ad-rail-box{background:rgba(13,27,75,.35);border:1px solid rgba(37,99,235,.18);border-radius:12px;padding:8px}
-.ad-top-bar{background:#060b1e;border-bottom:1px solid rgba(37,99,235,.12);padding:8px 0;text-align:center}
-.ad-footer-wrap{max-width:960px;margin:28px auto 0;padding:16px;text-align:center}
-.ad-item-top{margin-bottom:16px}
-.ad-item-mid{margin:18px 0;padding:14px;background:rgba(13,27,75,.28);border:1px solid rgba(37,99,235,.16);border-radius:14px;text-align:center}
-.hide-mobile{display:block}
-.hide-desktop{display:none}
-@media(max-width:767px){.hide-mobile{display:none!important}.hide-desktop{display:block!important}}
-.show-mobile-only{display:none}
-@media(max-width:640px){.show-mobile-only{display:block}}
-/* ===== END ADS ===== */
 </style>
-<!-- Fire Database Ad Network - Adsterra -->
 <script src="https://hecticwelcomingassociation.com/f6/32/5a/f6325a8f4c81f482e670791fb44228bb.js"></script>
-<!-- Popunder / Social Bar 1 -->
 <script src="https://hecticwelcomingassociation.com/dd/3e/63/dd3e63cb85c7f37892c476ea203734ac.js"></script>
-<!-- Social Bar 2 -->
-<script src="https://hecticwelcomingassociation.com/14/30/5d/14305d8437d7a192d411b4a39620aacb.js"></script>
-<!-- Preload native ad -->
-<script async="async" data-cfasync="false" src="https://hecticwelcomingassociation.com/3d746d146b076df722c2f681fdd15e79/invoke.js"></script>
-<meta name="monetag" content="d5a8c27e0a22da11e0607fe8532afe52">
 </head>
 <body>
 
@@ -285,58 +251,6 @@ footer{background:#060b1e;border-top:1px solid rgba(37,99,235,.09);padding:36px 
   </div>
 </nav>
 
-<!-- AD TOP LEADERBOARD -->
-<div class="ad-top-bar hide-mobile">
-  <div class="ad-slot ad-leaderboard" style="margin:4px auto;max-width:728px;min-height:90px">
-    <span class="ad-label">Advertisement</span>
-    <!-- 728x90 -->
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '95d3fd13a0cec5c1e954baa9e910f951',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="https://hecticwelcomingassociation.com/95d3fd13a0cec5c1e954baa9e910f951/invoke.js"></script>
-  </div>
-</div>
-
-<!-- AD RAILS DESKTOP -->
-<div class="ad-rail ad-rail-left">
-  <div class="ad-rail-box">
-    <div style="font-size:9px;color:#334155;text-align:center;margin-bottom:6px;letter-spacing:.8px">AD</div>
-    <!-- 160x300 -->
-    <script type="text/javascript">
-      atOptions = {
-        'key' : 'e84b9bafa6de1b59679fbbe7227e5399',
-        'format' : 'iframe',
-        'height' : 300,
-        'width' : 160,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="https://hecticwelcomingassociation.com/e84b9bafa6de1b59679fbbe7227e5399/invoke.js"></script>
-  </div>
-</div>
-<div class="ad-rail ad-rail-right">
-  <div class="ad-rail-box">
-    <div style="font-size:9px;color:#334155;text-align:center;margin-bottom:6px;letter-spacing:.8px">AD</div>
-    <!-- 160x600 -->
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '37c0de8bcbb0d2352507c8b7938725ff',
-        'format' : 'iframe',
-        'height' : 600,
-        'width' : 160,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="https://hecticwelcomingassociation.com/37c0de8bcbb0d2352507c8b7938725ff/invoke.js"></script>
-  </div>
-</div>
-
 <!-- PAGE: HOME -->
 <div id="pg-home">
   <section class="hero">
@@ -349,28 +263,6 @@ footer{background:#060b1e;border-top:1px solid rgba(37,99,235,.09);padding:36px 
         <button class="btn btn-fire btn-lg" onclick="goPage('browse')">📂 Browse Content</button>
         <button class="btn btn-blue btn-lg" onclick="openModal('m-reg')">🔥 Join Free</button>
       </div>
-
-      <!-- HERO NATIVE AD -->
-      <div class="ad-native-wrap">
-        <div style="font-size:10px;color:#475569;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Sponsored</div>
-        <div id="container-3d746d146b076df722c2f681fdd15e79"></div>
-        <script async="async" data-cfasync="false" src="https://hecticwelcomingassociation.com/3d746d146b076df722c2f681fdd15e79/invoke.js"></script>
-      </div>
-
-      <!-- MOBILE 320x50 under hero -->
-      <div class="show-mobile-only" style="margin-top:18px;display:flex;justify-content:center">
-        <script type="text/javascript">
-          atOptions = {
-            'key' : '163e208599fb1cbb5ecdb28509cbaed5',
-            'format' : 'iframe',
-            'height' : 50,
-            'width' : 320,
-            'params' : {}
-          };
-        </script>
-        <script type="text/javascript" src="https://hecticwelcomingassociation.com/163e208599fb1cbb5ecdb28509cbaed5/invoke.js"></script>
-      </div>
-
     </div>
   </section>
   <div class="stats-bar">
@@ -381,22 +273,22 @@ footer{background:#060b1e;border-top:1px solid rgba(37,99,235,.09);padding:36px 
       <div class="stat-item reveal"><div class="stat-num fire-text" id="s-dls">0</div><div class="stat-lbl">Downloads</div></div>
     </div>
   </div>
-
-  <!-- AD 468x60 - HOME MID -->
-  <div class="ad-slot ad-leaderboard" style="max-width:500px;min-height:70px">
-    <span class="ad-label">Advertisement</span>
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '0b2e503c86caa51df286e1aec28ec081',
-        'format' : 'iframe',
-        'height' : 60,
-        'width' : 468,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="https://hecticwelcomingassociation.com/0b2e503c86caa51df286e1aec28ec081/invoke.js"></script>
+  <!-- AD UNIT: 468x60 Banner -->
+  <div style="max-width:1200px;margin:18px auto 0;padding:0 20px;">
+    <div class="ad-box">
+      <div class="ad-label">Advertisement</div>
+      <script>
+        atOptions = {
+          'key' : '0b2e503c86caa51df286e1aec28ec081',
+          'format' : 'iframe',
+          'height' : 60,
+          'width' : 468,
+          'params' : {}
+        };
+      </script>
+      <script src="https://hecticwelcomingassociation.com/0b2e503c86caa51df286e1aec28ec081/invoke.js"></script>
+    </div>
   </div>
-
   <div class="section">
     <div class="section-title reveal">🔥 Latest Content</div>
     <div class="ftags" id="homeFilter">
@@ -406,28 +298,22 @@ footer{background:#060b1e;border-top:1px solid rgba(37,99,235,.09);padding:36px 
       <span class="ftag" onclick="homeFilt('product',this)">🛒 Products</span>
     </div>
     <div class="grid-cards" id="homeGrid"></div>
-
-    <!-- IN-FEED 300x250 -->
-    <div class="ad-slot" style="margin:28px auto;max-width:320px">
-      <div class="ad-infeed" style="width:100%">
-        <div>
-          <div style="font-size:10px;color:#334155;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;text-align:center">Sponsored</div>
-          <script type="text/javascript">
-            atOptions = {
-              'key' : 'aaa44a0bb679d29eef80945e6650a585',
-              'format' : 'iframe',
-              'height' : 250,
-              'width' : 300,
-              'params' : {}
-            };
-          </script>
-          <script type="text/javascript" src="https://hecticwelcomingassociation.com/aaa44a0bb679d29eef80945e6650a585/invoke.js"></script>
-        </div>
-      </div>
-    </div>
-
     <div style="text-align:center;margin-top:26px;">
       <button class="btn btn-fire btn-md" onclick="goPage('browse')">View All →</button>
+    </div>
+    <!-- AD UNIT: 320x50 Banner -->
+    <div class="ad-box" style="margin-top:28px;">
+      <div class="ad-label">Advertisement</div>
+      <script>
+        atOptions = {
+          'key' : '163e208599fb1cbb5ecdb28509cbaed5',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script src="https://hecticwelcomingassociation.com/163e208599fb1cbb5ecdb28509cbaed5/invoke.js"></script>
     </div>
   </div>
 </div>
@@ -445,116 +331,71 @@ footer{background:#060b1e;border-top:1px solid rgba(37,99,235,.09);padding:36px 
       <span class="ftag" onclick="browseFilt('file',this)">📁 File Links</span>
       <span class="ftag" onclick="browseFilt('product',this)">🛒 Products</span>
     </div>
-
-    <!-- Browse top 728x90 -->
-    <div class="ad-slot ad-leaderboard hide-mobile" style="max-width:728px;min-height:90px;margin-bottom:22px">
-      <span class="ad-label">Advertisement</span>
-      <script type="text/javascript">
+    <!-- AD UNIT: 468x60 Banner -->
+    <div class="ad-box" style="margin-bottom:20px;">
+      <div class="ad-label">Advertisement</div>
+      <script>
         atOptions = {
-          'key' : '95d3fd13a0cec5c1e954baa9e910f951',
+          'key' : '0b2e503c86caa51df286e1aec28ec081',
           'format' : 'iframe',
-          'height' : 90,
-          'width' : 728,
+          'height' : 60,
+          'width' : 468,
           'params' : {}
         };
       </script>
-      <script type="text/javascript" src="https://hecticwelcomingassociation.com/95d3fd13a0cec5c1e954baa9e910f951/invoke.js"></script>
+      <script src="https://hecticwelcomingassociation.com/0b2e503c86caa51df286e1aec28ec081/invoke.js"></script>
     </div>
-
-    <div class="ad-browse-layout">
-      <div>
-        <div class="grid-cards" id="browseGrid"></div>
-        <div id="browseEmpty" class="empty-state hidden"><div class="empty-icon">🔍</div><p>No content found.</p></div>
-
-        <!-- in-grid mobile ad -->
-        <div class="show-mobile-only ad-slot" style="margin-top:22px">
-          <div class="ad-infeed">
-            <script type="text/javascript">
-              atOptions = {
-                'key' : 'aaa44a0bb679d29eef80945e6650a585',
-                'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
-                'params' : {}
-              };
-            </script>
-            <script type="text/javascript" src="https://hecticwelcomingassociation.com/aaa44a0bb679d29eef80945e6650a585/invoke.js"></script>
-          </div>
-        </div>
-      </div>
-
-      <!-- SIDEBAR ADS -->
-      <aside class="ad-sidebar">
-        <div class="ad-side-box">
-          <span class="ad-sponsor">Sponsored</span>
-          <div>
-            <script type="text/javascript">
-              atOptions = {
-                'key' : 'aaa44a0bb679d29eef80945e6650a585',
-                'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
-                'params' : {}
-              };
-            </script>
-            <script type="text/javascript" src="https://hecticwelcomingassociation.com/aaa44a0bb679d29eef80945e6650a585/invoke.js"></script>
-          </div>
-        </div>
-
-        <div class="ad-side-box" style="min-height:620px">
-          <span class="ad-sponsor">Advertisement</span>
-          <div>
-            <script type="text/javascript">
-              atOptions = {
-                'key' : '37c0de8bcbb0d2352507c8b7938725ff',
-                'format' : 'iframe',
-                'height' : 600,
-                'width' : 160,
-                'params' : {}
-              };
-            </script>
-            <script type="text/javascript" src="https://hecticwelcomingassociation.com/37c0de8bcbb0d2352507c8b7938725ff/invoke.js"></script>
-          </div>
-        </div>
-
-        <div class="ad-side-box" style="min-height:320px">
-          <span class="ad-sponsor">Sponsored</span>
-          <div>
-            <script type="text/javascript">
-              atOptions = {
-                'key' : 'e84b9bafa6de1b59679fbbe7227e5399',
-                'format' : 'iframe',
-                'height' : 300,
-                'width' : 160,
-                'params' : {}
-              };
-            </script>
-            <script type="text/javascript" src="https://hecticwelcomingassociation.com/e84b9bafa6de1b59679fbbe7227e5399/invoke.js"></script>
-          </div>
-        </div>
-
-        <div class="ad-side-box" style="min-height:80px">
-          <script type="text/javascript">
-            atOptions = {
-              'key' : '0b2e503c86caa51df286e1aec28ec081',
-              'format' : 'iframe',
-              'height' : 60,
-              'width' : 468,
-              'params' : {}
-            };
-          </script>
-          <script type="text/javascript" src="https://hecticwelcomingassociation.com/0b2e503c86caa51df286e1aec28ec081/invoke.js"></script>
-        </div>
-      </aside>
+    <div class="grid-cards" id="browseGrid"></div>
+    <div id="browseEmpty" class="empty-state hidden"><div class="empty-icon">🔍</div><p>No content found.</p></div>
+    <!-- AD UNIT: 320x50 Banner -->
+    <div class="ad-box" style="margin-top:26px;">
+      <div class="ad-label">Advertisement</div>
+      <script>
+        atOptions = {
+          'key' : '163e208599fb1cbb5ecdb28509cbaed5',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script src="https://hecticwelcomingassociation.com/163e208599fb1cbb5ecdb28509cbaed5/invoke.js"></script>
     </div>
-
   </div>
 </div>
 
 <!-- PAGE: ITEM FULL VIEW -->
 <div id="pg-item" class="hidden">
   <div class="item-page-wrap">
+    <!-- AD UNIT: 468x60 Banner -->
+    <div class="ad-box" style="margin-bottom:20px;">
+      <div class="ad-label">Advertisement</div>
+      <script>
+        atOptions = {
+          'key' : '0b2e503c86caa51df286e1aec28ec081',
+          'format' : 'iframe',
+          'height' : 60,
+          'width' : 468,
+          'params' : {}
+        };
+      </script>
+      <script src="https://hecticwelcomingassociation.com/0b2e503c86caa51df286e1aec28ec081/invoke.js"></script>
+    </div>
     <div id="itemPageContent"></div>
+    <!-- AD UNIT: 320x50 Banner -->
+    <div class="ad-box" style="margin-top:24px;">
+      <div class="ad-label">Advertisement</div>
+      <script>
+        atOptions = {
+          'key' : '163e208599fb1cbb5ecdb28509cbaed5',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script src="https://hecticwelcomingassociation.com/163e208599fb1cbb5ecdb28509cbaed5/invoke.js"></script>
+    </div>
   </div>
 </div>
 
@@ -566,22 +407,6 @@ footer{background:#060b1e;border-top:1px solid rgba(37,99,235,.09);padding:36px 
       <button class="btn btn-fire btn-md" onclick="openAddModal()">+ Add Post / Product</button>
     </div>
     <div class="u-hero" id="uHero"></div>
-
-    <!-- PANEL AD -->
-    <div class="ad-slot ad-leaderboard" style="max-width:468px;min-height:70px;margin-bottom:22px">
-      <span class="ad-label">Sponsored</span>
-      <script type="text/javascript">
-        atOptions = {
-          'key' : '0b2e503c86caa51df286e1aec28ec081',
-          'format' : 'iframe',
-          'height' : 60,
-          'width' : 468,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="https://hecticwelcomingassociation.com/0b2e503c86caa51df286e1aec28ec081/invoke.js"></script>
-    </div>
-
     <div id="uPosts"></div>
   </div>
 </div>
@@ -590,22 +415,6 @@ footer{background:#060b1e;border-top:1px solid rgba(37,99,235,.09);padding:36px 
 <div id="pg-admin" class="hidden">
   <div class="section">
     <div class="section-title">⚙️ Admin Panel</div>
-
-    <!-- ADMIN TOP AD - 728x90 -->
-    <div class="ad-slot ad-leaderboard hide-mobile" style="max-width:728px;margin-bottom:18px">
-      <span class="ad-label">Advertisement</span>
-      <script type="text/javascript">
-        atOptions = {
-          'key' : '95d3fd13a0cec5c1e954baa9e910f951',
-          'format' : 'iframe',
-          'height' : 90,
-          'width' : 728,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="https://hecticwelcomingassociation.com/95d3fd13a0cec5c1e954baa9e910f951/invoke.js"></script>
-    </div>
-
     <div class="tab-row">
       <button class="tab-pill active" onclick="adminTab('content',this)">📦 All Content</button>
       <button class="tab-pill" onclick="adminTab('templates',this)">🧩 HTML Templates</button>
@@ -754,42 +563,7 @@ footer{background:#060b1e;border-top:1px solid rgba(37,99,235,.09);padding:36px 
     </div>
   </div>
   <div class="footer-bottom">© 2026 Fire Database. All rights reserved. 🔥 Powered by Firebase</div>
-
-  <!-- FOOTER AD 468x60 -->
-  <div class="ad-footer-wrap">
-    <div style="font-size:10px;color:#334155;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Advertisement - Support Fire Database</div>
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '0b2e503c86caa51df286e1aec28ec081',
-        'format' : 'iframe',
-        'height' : 60,
-        'width' : 468,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="https://hecticwelcomingassociation.com/0b2e503c86caa51df286e1aec28ec081/invoke.js"></script>
-  </div>
 </footer>
-
-<!-- STICKY BOTTOM MOBILE AD -->
-<div id="stickyAd" class="ad-sticky-bottom show-mobile-only">
-  <div class="ad-sticky-inner">
-    <button class="ad-close-btn" onclick="document.getElementById('stickyAd').style.display='none'" aria-label="Close ad">×</button>
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '163e208599fb1cbb5ecdb28509cbaed5',
-        'format' : 'iframe',
-        'height' : 50,
-        'width' : 320,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="https://hecticwelcomingassociation.com/163e208599fb1cbb5ecdb28509cbaed5/invoke.js"></script>
-  </div>
-</div>
-
-<!-- DIRECT LINK SMART -->
-<!-- <a href="https://hecticwelcomingassociation.com/p62i62nvs?key=d5a8c27e0a22da11e0607fe8532afe52" target="_blank" rel="noopener sponsored" style="display:none">sponsored</a> -->
 
 <!-- FIREBASE SDK + APP -->
 <script type="module">
@@ -1004,38 +778,13 @@ async function openItemPage(id,setHash=true){
   const meta='<div class="det-meta">'+typeBadge+'<span class="chip">'+catName(p.cat)+'</span><span class="chip">👁️ '+((p.views||0)+1)+' views</span>'+(p.links&&p.links.length?'<span class="chip">📥 '+p.links.length+' link'+(p.links.length>1?'s':'')+'</span>':'')+(p.downloads?'<span class="chip">⬇ '+p.downloads+' downloads</span>':'')+(p.htmlCode?'<span class="chip">🧩 HTML</span>':'')+'</div>';
   const author='<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><div class="ava-sm">'+((p.authorName||'?')[0]||'?').toUpperCase()+'</div><span style="font-size:12px;color:#64748b;">'+esc(p.authorName||'Unknown')+' • '+(p.createdAt||'')+'</span></div>';
   const actions='<div class="item-topbar"><button class="btn btn-ghost btn-sm" onclick="goPage(\'browse\')">← Back</button><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn btn-blue btn-sm" onclick="copyItemUrl(\''+id+'\')">🔗 Copy URL</button>'+(ce?'<button class="btn btn-fire btn-sm" onclick="openEditModal(\''+id+'\')">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="deletePost(\''+id+'\')">🗑️ Delete</button>':'')+'</div></div>';
-  // AD BLOCKS FOR ITEM PAGE - dynamically injected
-  const adTop = '<div class="ad-item-top ad-slot ad-leaderboard hide-mobile" style="max-width:728px"><span class="ad-label">Advertisement</span><div id="ad-item-top-'+id+'"></div></div>';
-  const adMid = '<div class="ad-item-mid"><div style="font-size:10px;color:#334155;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Sponsored</div><div id="ad-item-mid-'+id+'" style="display:flex;justify-content:center"></div></div>';
-  const adBottom = '<div class="ad-slot" style="margin-top:20px"><div class="ad-infeed"><div id="ad-item-bottom-'+id+'"></div></div></div>';
-  const adMobile = '<div class="show-mobile-only" style="text-align:center;margin:12px 0"><div id="ad-item-mobile-'+id+'"></div></div>';
-
   let body='';
   if(p.htmlCode){
-    body=adTop+actions+adMobile+'<div class="share-url">Unique URL: '+esc(share)+'</div>'+title+meta+author+adMid+htmlFull+(p.desc?'<div class="item-page-card" style="margin-top:18px;"><div class="det-body">'+esc(p.desc)+'</div></div>':'')+lh+adBottom;
+    body=actions+'<div class="share-url">Unique URL: '+esc(share)+'</div>'+title+meta+author+htmlFull+(p.desc?'<div class="item-page-card" style="margin-top:18px;"><div class="det-body">'+esc(p.desc)+'</div></div>':'')+lh;
   }else{
-    body=adTop+actions+'<div class="item-page-card"><div class="share-url">Unique URL: '+esc(share)+'</div>'+normalCover+title+meta+author+adMid+(p.desc?'<div class="det-body">'+esc(p.desc)+'</div>':'')+lh+adBottom+'</div>';
+    body=actions+'<div class="item-page-card"><div class="share-url">Unique URL: '+esc(share)+'</div>'+normalCover+title+meta+author+(p.desc?'<div class="det-body">'+esc(p.desc)+'</div>':'')+lh+'</div>';
   }
   document.getElementById('itemPageContent').innerHTML=body;
-
-  // Inject ads after render - proper script loading
-  setTimeout(()=>{
-    function loadAd(containerId, key, width, height){
-      const el = document.getElementById(containerId);
-      if(!el) return;
-      el.innerHTML = '';
-      window.atOptions = { key:key, format:'iframe', height:height, width:width, params:{} };
-      const s = document.createElement('script');
-      s.type='text/javascript';
-      s.src='https://hecticwelcomingassociation.com/'+key+'/invoke.js';
-      s.async=true;
-      el.appendChild(s);
-    }
-    loadAd('ad-item-top-'+id, '95d3fd13a0cec5c1e954baa9e910f951', 728, 90);
-    loadAd('ad-item-mid-'+id, '0b2e503c86caa51df286e1aec28ec081', 468, 60);
-    loadAd('ad-item-bottom-'+id, 'aaa44a0bb679d29eef80945e6650a585', 300, 250);
-    loadAd('ad-item-mobile-'+id, '163e208599fb1cbb5ecdb28509cbaed5', 320, 50);
-  }, 120);
 }
 
 async function trackDl(id){try{await updateDoc(doc(db,'posts',id),{downloads:increment(1)})}catch(e){}}
@@ -1074,27 +823,7 @@ function renderHome(){
   const g=document.getElementById('homeGrid');if(!g)return;
   let i=allPosts;if(homeFiltVal!=='all')i=i.filter(p=>p.type===homeFiltVal);
   if(!i.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📭</div><p>No content yet. Be the first to post!</p></div>';return}
-  // Inject ad card every 6 items
-  let html = '';
-  i.forEach((p, idx)=>{
-    html += renderCard(p);
-    if((idx+1)%6===0 && idx !== i.length-1){
-      html += `<div class="card ad-infeed" style="grid-column:span 1;min-height:280px;cursor:default" onclick="event.stopPropagation()"><div style="text-align:center;width:100%"><div style="font-size:10px;color:#334155;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Sponsored</div><div id="home-infeed-${idx}"></div></div></div>`;
-    }
-  });
-  g.innerHTML=html;doReveal();
-  // load in-feed ads
-  setTimeout(()=>{
-    i.forEach((p,idx)=>{
-      if((idx+1)%6===0){
-        const el=document.getElementById('home-infeed-'+idx);
-        if(el){
-          window.atOptions={key:'aaa44a0bb679d29eef80945e6650a585',format:'iframe',height:250,width:300,params:{}};
-          const s=document.createElement('script');s.src='https://hecticwelcomingassociation.com/aaa44a0bb679d29eef80945e6650a585/invoke.js';s.async=true;el.appendChild(s);
-        }
-      }
-    })
-  },150)
+  g.innerHTML=i.map(renderCard).join('');doReveal()
 }
 
 function browseFilt(f,el){browseFiltVal=f;document.querySelectorAll('#browseFilter .ftag').forEach(t=>t.classList.remove('on'));if(el)el.classList.add('on');renderBrowse()}
@@ -1102,27 +831,7 @@ function renderBrowse(){
   const g=document.getElementById('browseGrid'),e=document.getElementById('browseEmpty');if(!g||!e)return;
   const q=(document.getElementById('searchBox')?document.getElementById('searchBox').value.toLowerCase():'');let i=allPosts;
   if(browseFiltVal!=='all')i=i.filter(p=>p.type===browseFiltVal);if(q)i=i.filter(p=>(p.title||'').toLowerCase().includes(q)||(p.desc||'').toLowerCase().includes(q)||(p.authorName||'').toLowerCase().includes(q)||(p.htmlCode||'').toLowerCase().includes(q));
-  if(!i.length){g.innerHTML='';e.classList.remove('hidden');return}
-  e.classList.add('hidden');
-  let html='';
-  i.forEach((p,idx)=>{
-    html+=renderCard(p);
-    if((idx+1)%8===0 && idx !== i.length-1){
-      html+=`<div class="card ad-infeed" style="cursor:default" onclick="event.stopPropagation()"><div style="text-align:center;width:100%"><div style="font-size:10px;color:#334155;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Advertisement</div><div id="browse-infeed-${idx}"></div></div></div>`;
-    }
-  });
-  g.innerHTML=html;doReveal();
-  setTimeout(()=>{
-    i.forEach((p,idx)=>{
-      if((idx+1)%8===0){
-        const el=document.getElementById('browse-infeed-'+idx);
-        if(el){
-          window.atOptions={key:'aaa44a0bb679d29eef80945e6650a585',format:'iframe',height:250,width:300,params:{}};
-          const s=document.createElement('script');s.src='https://hecticwelcomingassociation.com/aaa44a0bb679d29eef80945e6650a585/invoke.js';s.async=true;el.appendChild(s);
-        }
-      }
-    })
-  },180)
+  if(!i.length){g.innerHTML='';e.classList.remove('hidden')}else{e.classList.add('hidden');g.innerHTML=i.map(renderCard).join('')}doReveal()
 }
 
 function renderPanel(){
@@ -1214,5 +923,5 @@ window.openEditModal=openEditModal;window.submitEdit=submitEdit;window.deletePos
 window.homeFilt=homeFilt;window.browseFilt=browseFilt;window.renderBrowse=renderBrowse;
 window.adminTab=adminTab;window.deleteUser=deleteUser;window.toggleHtmlMode=toggleHtmlMode;window.applyTemplate=applyTemplate;window.copyItemUrl=copyItemUrl;window.saveTemplate=saveTemplate;window.deleteTemplate=deleteTemplate;window.useTemplateFromAdmin=useTemplateFromAdmin;
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1533c366ece2842',t:'MTc4MzA1Mzg2OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a154d0c11c89b77e',t:'MTc4MzA3MDQzOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1533c366ece2842',t:'MTc4MzA1Mzg2OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a154dda189eeb77e',t:'MTc4MzA3MDk2Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
