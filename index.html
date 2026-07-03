@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Firebase SDK (Auth + Firestore only — no paid Storage needed!) -->
+  <!-- Firebase SDK (Auth + Firestore only) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import {
@@ -51,16 +51,21 @@
   </script>
 
   <!-- ══════════════════════════════════════════════════════════
-       ☁️ CLOUDINARY CONFIG — 100% FREE FILE UPLOAD (25GB free)
-       Steps to get your Cloud Name & Upload Preset:
-       1. Go to https://cloudinary.com  → Sign Up Free
-       2. Dashboard → Cloud Name copy කරන්න
-       3. Settings → Upload → Add upload preset → Unsigned → Save
-       4. Below CLOUDINARY_CLOUD_NAME සහ CLOUDINARY_UPLOAD_PRESET replace කරන්න
+       ☁️ PUTER.JS — UNLIMITED FREE STORAGE (User Pays model)
+       • No API key needed • No signup needed for developer
+       • Each user logs into their own FREE Puter account
+       • Storage is unlimited — costs YOU $0 forever!
+  ══════════════════════════════════════════════════════════ -->
+  <script src="https://js.puter.com/v2/"></script>
+
+  <!-- ══════════════════════════════════════════════════════════
+       ☁️ CLOUDINARY — BACKUP for non-logged-in Puter users
+       Cloud Name: sx9g2po9
+       Upload Preset: fire_database (Unsigned)
   ══════════════════════════════════════════════════════════ -->
   <script>
     window.CLOUDINARY_CLOUD_NAME    = 'sx9g2po9';
-    window.CLOUDINARY_UPLOAD_PRESET = 'fire_database'; // ← Step එකක් තියෙනවා, බලන්න!
+    window.CLOUDINARY_UPLOAD_PRESET = 'fire_database';
   </script>
 
   <style>
@@ -527,9 +532,17 @@ service firebase.storage {
     </div>
     <div id="selectedFiles" style="margin-top:10px;"></div>
     <div id="uploadProgress" class="hidden" style="margin-top:10px;"></div>
-    <div style="background:#0a2a1a;border:1px solid #22c55e33;border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12px;color:#4ade80;">
-      ☁️ Files upload to <b>Cloudinary</b> — 100% free, 25GB storage, no credit card needed.
-      <a href="https://cloudinary.com" target="_blank" style="color:#f97316;margin-left:4px;">Get free account →</a>
+    <div style="background:#0a0a2a;border:1px solid #a78bfa44;border-radius:10px;padding:12px 14px;margin-top:10px;font-size:12px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <span style="font-size:1.1rem;">♾️</span>
+        <span style="color:#a78bfa;font-weight:700;">Puter Cloud — Unlimited FREE Storage</span>
+        <span style="background:#a78bfa22;border:1px solid #a78bfa44;border-radius:999px;padding:1px 8px;font-size:10px;color:#a78bfa;">PRIMARY</span>
+      </div>
+      <div style="color:#64748b;line-height:1.6;">
+        Files upload to user's own <b style="color:#a78bfa;">Puter account</b> (free, unlimited). 
+        First upload → Puter login popup shows once.<br>
+        <span style="color:#4ade80;">☁️ Cloudinary (25GB)</span> used as backup if Puter unavailable.
+      </div>
     </div>
   </div>
 
@@ -852,22 +865,55 @@ function formatSize(bytes) {
   return (bytes/(1024*1024)).toFixed(1) + ' MB';
 }
 
-// ── Cloudinary Upload (FREE — no Firebase Storage needed!) ──
-async function uploadToCloudinary(file, onProgress) {
+// ═══════════════════════════════════════════════════════════
+//  ☁️ SMART UPLOAD — Puter.js (Unlimited FREE) first,
+//     fallback to Cloudinary (25GB FREE) if Puter not signed in
+// ═══════════════════════════════════════════════════════════
+
+// Check if Puter is available and user is signed in
+function isPuterReady() {
+  try { return typeof puter !== 'undefined'; } catch(e) { return false; }
+}
+
+// Upload via Puter.js — UNLIMITED FREE storage
+async function uploadViaPuter(file, onProgress) {
+  if (!isPuterReady()) throw new Error('Puter not available');
+
+  // Sign in to Puter if not already (shows Puter login popup once)
+  if (!puter.auth.isSignedIn()) {
+    await puter.auth.signIn();
+  }
+
+  onProgress && onProgress(10);
+
+  // Save file to Puter cloud storage under fire-database folder
+  const fileName  = `fire-database/${currentUser.uid}/${Date.now()}_${file.name}`;
+  const puterFile = await puter.fs.upload(file, 'fire-database/' + currentUser.uid, {
+    name: Date.now() + '_' + file.name,
+    createMissingParents: true,
+  });
+
+  onProgress && onProgress(80);
+
+  // Get a public readable URL
+  const url = await puter.fs.getReadURL(puterFile.path || puterFile.name);
+
+  onProgress && onProgress(100);
+
+  return {
+    url,
+    name:     file.name,
+    size:     file.size,
+    ext:      (file.name.split('.').pop() || '').toLowerCase(),
+    storage:  'puter',
+    path:     puterFile.path || puterFile.name
+  };
+}
+
+// Upload via Cloudinary — 25GB FREE fallback
+async function uploadViaCloudinary(file, onProgress) {
   const cloudName    = window.CLOUDINARY_CLOUD_NAME;
   const uploadPreset = window.CLOUDINARY_UPLOAD_PRESET;
-
-  if (!cloudName || cloudName === 'YOUR_CLOUD_NAME') {
-    throw new Error('Cloudinary config not set! See HTML file top section.');
-  }
-
-  // ── File size check: Regular users max 100MB, Admin unlimited ──
-  const MAX_SIZE_MB  = 100;
-  const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
-
-  if (!currentUser?.isAdmin && file.size > MAX_SIZE_BYTES) {
-    throw new Error(`File too large! Maximum allowed size is ${MAX_SIZE_MB}MB. Your file: ${formatSize(file.size)}`);
-  }
 
   const formData = new FormData();
   formData.append('file', file);
@@ -877,32 +923,50 @@ async function uploadToCloudinary(file, onProgress) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`);
-
     xhr.upload.onprogress = e => {
-      if (e.lengthComputable && onProgress) {
-        onProgress(Math.round(e.loaded / e.total * 100));
-      }
+      if (e.lengthComputable && onProgress) onProgress(Math.round(e.loaded / e.total * 100));
     };
-
     xhr.onload = () => {
       if (xhr.status === 200) {
-        const data = JSON.parse(xhr.responseText);
+        const d = JSON.parse(xhr.responseText);
         resolve({
-          url:      data.secure_url,
-          publicId: data.public_id,
+          url:      d.secure_url,
+          publicId: d.public_id,
           name:     file.name,
           size:     file.size,
           ext:      (file.name.split('.').pop() || '').toLowerCase(),
-          format:   data.format,
-          bytes:    data.bytes
+          storage:  'cloudinary'
         });
       } else {
-        reject(new Error('Upload failed: ' + xhr.responseText));
+        reject(new Error('Cloudinary upload failed: ' + xhr.responseText));
       }
     };
-    xhr.onerror = () => reject(new Error('Network error during upload'));
+    xhr.onerror = () => reject(new Error('Network error'));
     xhr.send(formData);
   });
+}
+
+// MAIN upload function — tries Puter first, falls back to Cloudinary
+async function uploadFile(file, onProgress, onStatus) {
+  // File size check for non-admins
+  const MAX_BYTES = 100 * 1024 * 1024; // 100MB
+  if (!currentUser?.isAdmin && file.size > MAX_BYTES) {
+    throw new Error(`File too large! Max 100MB. Your file: ${formatSize(file.size)}`);
+  }
+
+  // Try Puter.js first (unlimited free)
+  if (isPuterReady()) {
+    try {
+      onStatus && onStatus('puter');
+      return await uploadViaPuter(file, onProgress);
+    } catch(e) {
+      console.warn('Puter upload failed, trying Cloudinary...', e.message);
+    }
+  }
+
+  // Fallback: Cloudinary (25GB free)
+  onStatus && onStatus('cloudinary');
+  return await uploadViaCloudinary(file, onProgress);
 }
 
 // ── Submit post/file ────────────────────────────────
@@ -915,6 +979,12 @@ async function submitUpload() {
 
   if (!title) { showNotif('⚠️ Title is required!'); return; }
   if (uploadType === 'file' && pendingFiles.length === 0) { showNotif('⚠️ Select at least one file!'); return; }
+
+  // Block if any file exceeds 100MB (non-admin)
+  const MAX_BYTES = 100 * 1024 * 1024;
+  if (!currentUser?.isAdmin && pendingFiles.some(f => f.size > MAX_BYTES)) {
+    showNotif('⚠️ Remove files over 100MB before uploading!'); return;
+  }
 
   const submitBtn = document.getElementById('uploadSubmitBtn');
   submitBtn.textContent = '⏳ Uploading…';
@@ -931,30 +1001,45 @@ async function submitUpload() {
       for (let i = 0; i < pendingFiles.length; i++) {
         const file = pendingFiles[i];
 
-        progEl.innerHTML = `
-          <div class="progress-wrap">
-            <div style="font-size:13px;color:#93c5fd;margin-bottom:6px;">
-              ☁️ Uploading to Cloudinary: <b>${file.name}</b> (${i+1}/${pendingFiles.length})
-            </div>
-            <div class="progress-bar-bg">
-              <div class="progress-bar-fill" id="pbar" style="width:0%;"></div>
-            </div>
-            <div style="font-size:11px;color:#475569;margin-top:4px;" id="pbarPct">0%</div>
-          </div>`;
+        const updateProgress = (pct, storageLabel) => {
+          const icon  = storageLabel === 'puter' ? '♾️' : '☁️';
+          const label = storageLabel === 'puter'
+            ? '<span style="color:#a78bfa;">Puter Cloud (Unlimited Free)</span>'
+            : '<span style="color:#4ade80;">Cloudinary (Free)</span>';
+          progEl.innerHTML = `
+            <div class="progress-wrap">
+              <div style="font-size:13px;color:#93c5fd;margin-bottom:6px;">
+                ${icon} Uploading to ${label}: <b>${file.name}</b>
+                <span style="color:#475569;font-size:11px;">(${i+1}/${pendingFiles.length})</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="pbar" style="width:${pct}%;"></div>
+              </div>
+              <div style="font-size:11px;color:#60a5fa;margin-top:4px;">${pct}% • ${formatSize(file.size)}</div>
+            </div>`;
+        };
 
-        const result = await uploadToCloudinary(file, pct => {
-          const bar = document.getElementById('pbar');
-          const txt = document.getElementById('pbarPct');
-          if (bar) bar.style.width = pct + '%';
-          if (txt) txt.textContent = pct + '%';
-        });
+        let storageType = 'cloudinary';
+        const result = await uploadFile(
+          file,
+          pct => updateProgress(pct, storageType),
+          s   => { storageType = s; updateProgress(0, s); }
+        );
 
         files.push(result);
       }
 
+      const storageUsed = files[0]?.storage === 'puter'
+        ? '♾️ Puter Cloud (Unlimited Free)'
+        : '☁️ Cloudinary (Free)';
+
       progEl.innerHTML = `
-        <div style="background:#052e16;border:1px solid #22c55e44;border-radius:10px;padding:12px 16px;color:#22c55e;font-size:13px;font-weight:600;">
-          ✅ ${files.length} file${files.length>1?'s':''} uploaded to Cloudinary!
+        <div style="background:#052e16;border:1px solid #22c55e44;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;">
+          <span style="font-size:1.5rem;">✅</span>
+          <div>
+            <div style="color:#22c55e;font-size:13px;font-weight:700;">${files.length} file${files.length>1?'s':''} uploaded!</div>
+            <div style="color:#475569;font-size:11px;margin-top:2px;">Stored on ${storageUsed}</div>
+          </div>
         </div>`;
     }
 
@@ -1397,5 +1482,5 @@ waitForFB(initApp);
   </div>
 </footer>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a15275732f875138',t:'MTc4MzA0NTcyNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1527befaa715137',t:'MTc4MzA0NTk5Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
