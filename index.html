@@ -497,7 +497,7 @@ footer{background:#060b1e;border-top:1px solid rgba(37,99,235,.09);padding:36px 
     <div id="fileLinksSection" class="hidden">
       <div style="background:#0a1628;border:1px solid #2563eb33;border-radius:14px;padding:16px;margin-bottom:14px;">
         <div style="font-weight:700;color:#fff;font-size:14px;margin-bottom:4px;">📁 Download Links</div>
-        <div style="font-size:12px;color:#475569;line-height:1.6;">Upload your file to Google Drive, Mega, or any hosting, then paste the <b style="color:#f97316;">download link</b> below.</div>
+        <div style="font-size:12px;color:#475569;line-height:1.6;">Upload your file to Google Drive, Mega, or any hosting, then paste the <b style="color:#f97316;">download link</b> below. You can also set a <b style="color:#f97316;">custom button name</b> for each link (e.g. "Watch Now", "Download HD").</div>
       </div>
       <div id="linksList"></div>
       <button class="btn btn-blue btn-sm" onclick="addLinkRow()" style="margin-bottom:6px;">+ Add Another Link</button>
@@ -707,17 +707,17 @@ function deriveTitleFromHtml(html){
   return 'HTML Item';
 }
 
-function addLinkRow(name,url){
-  name=name||'';url=url||'';linkRowCount++;const id='lr-'+linkRowCount;
+function addLinkRow(name,url,btn){
+  name=name||'';url=url||'';btn=btn||'';linkRowCount++;const id='lr-'+linkRowCount;
   const div=document.createElement('div');div.className='link-row';div.id=id;
-  div.innerHTML='<div class="link-row-num">'+linkRowCount+'</div><div class="link-row-body"><input class="inp" placeholder="File name" value="'+esc(name)+'" data-role="lname"><input class="inp" placeholder="Download URL" value="'+esc(url)+'" data-role="lurl"></div><button class="btn btn-danger btn-sm" style="margin-top:2px;align-self:flex-start;" onclick="removeLinkRow(\''+id+'\')">✕</button>';
+  div.innerHTML='<div class="link-row-num">'+linkRowCount+'</div><div class="link-row-body"><input class="inp" placeholder="File name" value="'+esc(name)+'" data-role="lname"><input class="inp" placeholder="Download URL" value="'+esc(url)+'" data-role="lurl"><input class="inp" placeholder="Button name (e.g. Watch Now, Download HD) — optional" value="'+esc(btn)+'" data-role="lbtn"></div><button class="btn btn-danger btn-sm" style="margin-top:2px;align-self:flex-start;" onclick="removeLinkRow(\''+id+'\')">✕</button>';
   document.getElementById('linksList').appendChild(div)
 }
 
 function removeLinkRow(id){const el=document.getElementById(id);if(el)el.remove()}
 
 function getLinks(){
-  const links=[];document.querySelectorAll('#linksList .link-row').forEach(r=>{const n=r.querySelector('[data-role="lname"]'),u=r.querySelector('[data-role="lurl"]'),nv=n?n.value.trim():'',uv=u?u.value.trim():'';if(uv)links.push({name:nv||'Download',url:uv})});return links
+  const links=[];document.querySelectorAll('#linksList .link-row').forEach(r=>{const n=r.querySelector('[data-role="lname"]'),u=r.querySelector('[data-role="lurl"]'),b=r.querySelector('[data-role="lbtn"]'),nv=n?n.value.trim():'',uv=u?u.value.trim():'',bv=b?b.value.trim():'';if(uv)links.push({name:nv||'Download',url:uv,btnText:bv||''})});return links
 }
 
 function openAddModal(postId){
@@ -728,7 +728,7 @@ function openAddModal(postId){
     te.textContent='Edit Post';sb.textContent='💾 Update';
     document.getElementById('a-title').value=p.title||'';document.getElementById('a-desc').value=p.desc||'';document.getElementById('a-cat').value=p.cat||'general';document.getElementById('a-cover').value=p.cover||'';document.getElementById('a-html').value=p.htmlCode||'';document.getElementById('a-use-html').checked=!!p.htmlCode;toggleHtmlMode();
     document.getElementById('linksList').innerHTML='';linkRowCount=0;
-    if(p.type==='file'&&p.links&&p.links.length)p.links.forEach(l=>addLinkRow(l.name,l.url));else if(p.type==='file')addLinkRow();
+    if(p.type==='file'&&p.links&&p.links.length)p.links.forEach(l=>addLinkRow(l.name,l.url,l.btnText));else if(p.type==='file')addLinkRow();
     setType(p.type||'post')
   }else{
     te.textContent='Add Post / File Links';sb.textContent='🔥 Publish';
@@ -771,7 +771,7 @@ async function openItemPage(id,setHash=true){
   try{await updateDoc(doc(db,'posts',id),{views:increment(1)})}catch(e){}
   const ce=currentUser&&(currentUser.isAdmin||currentUser.uid===p.authorId);
   const typeBadge=typeLabel(p),share=location.origin+location.pathname+'#item='+id;
-  const lh=(p.links&&p.links.length)?'<div class="dl-section"><div style="font-weight:700;color:#fff;font-size:14px;margin-bottom:12px;">📁 Download Links ('+p.links.length+')</div>'+p.links.map((l,i)=>'<div class="dl-item"><div class="dl-icon">'+linkEmoji(l.url)+'</div><div class="dl-info"><div class="dl-name">'+esc(l.name||'Download '+(i+1))+'</div><div class="dl-url">'+esc(l.url)+'</div></div><a href="'+escAttr(l.url)+'" target="_blank" rel="noopener" class="btn btn-fire btn-sm" onclick="trackDl(\''+id+'\')">⬇ Download</a></div>').join('')+'</div>':'';
+  const lh=(p.links&&p.links.length)?'<div class="dl-section"><div style="font-weight:700;color:#fff;font-size:14px;margin-bottom:12px;">📁 Download Links ('+p.links.length+')</div>'+p.links.map((l,i)=>'<div class="dl-item"><div class="dl-icon">'+linkEmoji(l.url)+'</div><div class="dl-info"><div class="dl-name">'+esc(l.name||'Download '+(i+1))+'</div><div class="dl-url">'+esc(l.url)+'</div></div><a href="'+escAttr(l.url)+'" target="_blank" rel="noopener" class="btn btn-fire btn-sm" onclick="trackDl(\''+id+'\')">⬇ '+esc((l.btnText&&l.btnText.trim())?l.btnText.trim():'Download')+'</a></div>').join('')+'</div>':'';
   const htmlFull=p.htmlCode?'<div class="item-html-full"><iframe sandbox="allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox" srcdoc="'+escAttr(p.htmlCode)+'"></iframe></div>':'';
   const normalCover=p.cover?'<img src="'+escAttr(p.cover)+'" class="det-cover" onerror="this.style.display=\'none\'">':'<div class="det-cover-ph">'+typeIcon(p)+'</div>';
   const title='<div class="det-title">'+esc(p.title||deriveTitleFromHtml(p.htmlCode))+'</div>';
